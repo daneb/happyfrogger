@@ -2,6 +2,8 @@
 
 A static content generation framework for the web.
 
+~![HappyFrogger](happyblogger.png) 
+
 ## TODO
 
 1. Dynamic Index.html (manually defined at present)

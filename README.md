@@ -2,7 +2,7 @@
 
 A static content generation framework for the web.
 
-~![HappyFrogger](happyblogger.png) 
+![HappyFrogger](happyblogger.png) 
 
 ## TODO
 

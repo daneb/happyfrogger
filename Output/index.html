@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Blog's Name</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+      plugins: [tailwindTypography]
+    }
+    </script>
+</head>
+<body class="bg-blue-50 text-gray-800">
+    <header class="text-center py-6 bg-white shadow">
+        <div class="flex justify-center items-center">
+            <a href="index.html">
+              <img src="images/me.png" alt="Profile Picture" class="w-12 h-12 rounded-full mr-4"/>
+            </a>
+            <h1 class="text-3xl font-bold">Dane Balia</h1>
+            <div class="ml-4">
+              <small>In all chaos there is a cosmos, in all disorder a secret order.</small>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        <!-- Programming Category -->
+        <section>
+            <h2 class="text-xl font-semibold text-blue-700 mt-8 mb-4">Ordo Ab Chao</h2>
+            <ul>
+                <li class="mb-2">
+                    <img src="images/happymarriage.jpg" alt="Wedding Careers" class="inline-block w-8 h-8 rounded mr-2">
+                    <a href="2023-05-08-the-mechanics-of-a-joyful-marriage.html" class="text-blue-600 hover:text-blue-800">The Less talked about area of Success</a>
+                </li>
+                <!-- Add more posts as needed -->
+            </ul>
+        </section>
+
+        <!-- Sermons Category -->
+        <section>
+            <h2 class="text-xl font-semibold text-blue-700 mt-8 mb-4">Biblical Teaching</h2>
+            <ul>
+                <li class="mb-2">
+                    <img src="path/to/thumbnail2.jpg" alt="Post Title 2" class="inline-block w-8 h-8 rounded mr-2">
+                    <a href="path/to/post2" class="text-blue-600 hover:text-blue-800">Post Title 2</a>
+                </li>
+                <!-- Add more posts as needed -->
+            </ul>
+        </section>
+
+        <!-- Poetry Category -->
+        <section>
+            <h2 class="text-xl font-semibold text-blue-700 mt-8 mb-4">Poetry</h2>
+            <ul>
+                <li class="mb-2">
+                    <img src="path/to/thumbnail3.jpg" alt="Post Title 3" class="inline-block w-8 h-8 rounded mr-2">
+                    <a href="path/to/post3" class="text-blue-600 hover:text-blue-800">Post Title 3</a>
+                </li>
+                <!-- Add more posts as needed -->
+            </ul>
+        </section>
+    </main>
+
+    <footer class="text-center py-4 bg-white shadow mt-10">
+        <p>&copy; 2024 Dane Balia. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+

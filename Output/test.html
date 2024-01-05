@@ -1,14 +1,30 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dane you did it</title>
+    <style>
+        /* You can add custom styles here if needed */
+      .prose p {
+          margin-bottom: 1em; /* Adjust the value as needed */
+      }
+    </style>
 </head>
-<body>
-    <h1>Dane you did it</h1>
-    <p><em>Published on: 2024/01/05 00:00:00</em></p>
-    <p>Category: Technology</p>
-    <div>
-      <h1>Hello World</h1>
-<h2>Mulan</h2>
+<body class="bg-gray-50 text-gray-800">
+    <header class="text-center py-6 bg-white shadow">
+        <div class="flex justify-center items-center">
+            <a href="index.html">
+              <img src="images/me.png" alt="Profile Picture" class="w-12 h-12 rounded-full mr-4"/>
+            </a>
+            <h1 class="text-3xl font-bold">Dane you did it</h1>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        <article>
+            <div class="prose prose-blue max-w-none">
+                <h1>Hello Love</h1>
+<h2>Mulan is one of your movies</h2>
 <ul>
 <li>Hello</li>
 <li>What</li>
@@ -16,8 +32,21 @@
 <li>Your</li>
 <li>Name</li>
 </ul>
-<p><img src="http://www.google.com" alt="Hello World" /></p>
+<p><a href="http://www.google.com">Hello World</a></p>
 
-    </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="text-center py-4 bg-white shadow mt-10">
+        <p>&copy; 2024 Dane Balia. All rights reserved.</p>
+    </footer>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          plugins: [tailwindTypography]
+        }
+    </script>
+
 </body>
 </html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Tour Of Generics In C#</title>
+    <link rel="stylesheet" href="output.css">
+    <style>
+        /* You can add custom styles here if needed */
+      .prose p {
+          margin-bottom: 1em; /* Adjust the value as needed */
+      }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <header class="text-center py-6 bg-white shadow">
+        <div class="flex justify-center items-center">
+            <a href="index.html">
+              <img src="images/me.png" alt="Profile Picture" class="w-12 h-12 rounded-full mr-4"/>
+            </a>
+            <h1 class="text-3xl font-bold">Quick Tour Of Generics In C#</h1>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        <article>
+            <div class="prose prose-blue max-w-none">
+                <p><img src="/images/csharp.jpg" alt="Generics" /></p>
+<p>Generics have been around since C# 2.0 and has become a tool we leverage so naturally now in C# we almost don't even think about it. So let's change that...</p>
+<h3>Definitions</h3>
+<p><em>Generics introduce to the .NET Framework the concept of type parameters, which make it possible to design classes and methods that defer the specification of one or more types until the class or method is declared and instantiated by client code</em>.</p>
+<p>Essentially generics allow you parameterize types and methods. Just as normal methods have <em>parameters</em> to tell them what <em>values</em> to use, generic types and methods have <em>type parameters</em> to tell them what <em>types</em> to use.</p>
+<h3>Clarification</h3>
+<p>Type parameters are placeholders for a type.</p>
+<p>There are <em>constructed types</em> and <em>generic types</em>.
+A constructed type is when the type arguments are specified. For example,</p>
+<pre><code>Dictionary&lt;int, string&gt;()
+</code></pre>
+<p>A generic type is when the type arguments are not specified. For example,</p>
+<pre><code>Dictionary&lt;TKey, TValue&gt;()
+</code></pre>
+<p>As per the code snippet below, writing a method to swap two <em>Integer</em> values is pretty rudimentary. But what if later we needed to do the very same but with <em>Strings</em>. This would result in two methods, or perhaps overloads.</p>
+<script src="https://gist.github.com/13124e5ec2369117aff8fc27a3a861e5.js"></script>
+<p>Generics to the rescue. We've isolated the type as a form of abstraction (<code>T</code>) to act as a placeholder for the type we intend to use.</p>
+<script src="https://gist.github.com/9ab19f0a644a3e79525f932e4e34cd5f.js"></script>
+<p>When the method is actually called, that placeholder is replaced with the type of the values used.</p>
+<script src="https://gist.github.com/f318890ecb9849ced43bccfe86744093.js"></script>
+<p>The value of Generics here is that it grants you <em>productivity</em> improvements, <em>expressiveness</em> and moves some safety concerns from <em>execution time to compile time</em>.</p>
+<p>Note the two ways in which the <em>method</em> can be called. One with the type explicit, and the other implicit through <em>type inference</em>. The compiler is inferring the <em>type parameters</em> based on the method arguments you pass.</p>
+<p>A <em>generic</em> is simply a placeholder for a type.</p>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="text-center py-4 bg-white shadow mt-10">
+        <p>&copy; 2024 Dane Balia. All rights reserved.</p>
+    </footer>
+</body>
+</html>

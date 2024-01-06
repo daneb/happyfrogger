@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a Home Firewall</title>
+    <link rel="stylesheet" href="output.css">
+    <style>
+        /* You can add custom styles here if needed */
+      .prose p {
+          margin-bottom: 1em; /* Adjust the value as needed */
+      }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <header class="text-center py-6 bg-white shadow">
+        <div class="flex justify-center items-center">
+            <a href="index.html">
+              <img src="images/me.png" alt="Profile Picture" class="w-12 h-12 rounded-full mr-4"/>
+            </a>
+            <h1 class="text-3xl font-bold">Building a Home Firewall</h1>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        <article>
+            <div class="prose prose-blue max-w-none">
+                <h2>The Problem</h2>
+<p>For about 3 years I've been running a D-Link DIR-825, a fibre and wireless router provided by my ISP. And here to begins my woe.
+I've been struggling with it's maintenance and software patching, it's long aged and become a dinosaur with no more firmware upgrades.
+With the increasing attacks worldwide on networks, I wanted deeper insight to the hardware and software used to defend and connect my home network.</p>
+<p>So I decided to poke around my router, and discovered that publicly visible to the world, and not by my configuration, was an SSH service.
+It was running with admin privilege and with the default password set by D-Link themselves (which I guessed by the way).</p>
+<p>Correlation is not necessarily causation of course, but the abstraction has paid a price.</p>
+<p><img src="/images/DIR-825.png" alt="Router" /></p>
+<h3>But first, interesting hack</h3>
+<p>If you want your router to shutdown daily at a set time. Instead of using cron, you can use the scheduler built into the shutdown command.</p>
+<pre><code class="language-bash"># This will shutdown daily at 22:00
+echo &quot;shutdown -h 22:00&quot; &gt;&gt; /etc/sysconfig/rc.local
+</code></pre>
+<p>The beauty of this is that you can interrupt the shutdown with:</p>
+<pre><code class="language-bash">shutdown -c
+</code></pre>
+<p>And to confirm if the command has fired on startup</p>
+<pre><code>ps -ef | grep shutdown
+</code></pre>
+<h2>Back to the Home Firewall setup</h2>
+<p>My first step to correcting the problem was to try identify a physical firewall that I could purchase.
+I live in South Africa so choice is limited, but I wanted something entirely cost effective, ability to deep dive into network traffic and
+something not made in China. That was the D-Link and it's support was horrible. Sadly, the closest thing was R5000 (Ubiquity) and it didn't seem practical
+with the current economic climate.</p>
+<p>That sparked an old idea, why not try a Raspberry PI 4. I attempted this before using Ubuntu server but ran into challenges with the wifi speed when it was used a Wireless hotspot.
+But I was on holiday now and well, why not. I had a incremental 2 phase plan.</p>
+<h2>What where some alternatives to IpFire?</h2>
+<ol>
+<li>I could have stuck with the DLink and overwritten it with <a href="https://openwrt.org">OpenWrt</a>. But sadly it wasn't supported.</li>
+<li>As mentioned the <a href="https://scoop.co.za/products/wireless-networking/ubiquiti-unifi/">Unify</a> was R4800.</li>
+<li>Just use vanilla Linux (Ubuntu etc). This is covered below in the Q&amp;A.</li>
+</ol>
+<h2>Why this may be valuable to do?</h2>
+<ol>
+<li>Fine grained control of your network</li>
+<li>More transparency around what is coming in and out</li>
+<li>Increase learning in network design and security</li>
+<li>You don't trust your existing device (it's out of firmware upgrades or really old)</li>
+</ol>
+<h3>Phase 1 - Proof of Concept</h3>
+<ul>
+<li>Retain the D-Link for speedy wifi access, but sufficiently limit it's capability.</li>
+<li>Use the Pi4 as the gateway and firewall with Raspbian 64</li>
+<li>Get basic masquerading working for everything on the D-Link - basically all wifi connected devices routing through the firewall to the internet.</li>
+</ul>
+<h3>Phase 2 - Implement with IpFire</h3>
+<ul>
+<li>Once that proved itself, I would replace Raspbian with something more enterprise - IpFire.</li>
+<li>Ensure the networking between the two devices and my home computers internet access functions correctly</li>
+<li>Try get rid of the D-Link and use the Pi4 as a Wireless Hotspot as well and gauge its performance</li>
+</ul>
+<h3>My Current Configuration</h3>
+<ol>
+<li>Fibre CPE that provides access through Ethernet cable</li>
+<li>Fibre Service Provider: Coolideas</li>
+<li>D-Link DIR 825 with the WAN port connected to the CPE and Wifi Hotspot</li>
+<li>Raspberry Pi4</li>
+</ol>
+<ul>
+<li>8GB Internal memory</li>
+<li>32 GB SSD</li>
+<li>USB Broadcom NIC</li>
+<li>Internal WLAN NIC</li>
+<li>Internal Ethernet NIC</li>
+</ul>
+<p><img src="/images/Pi4.jpg" alt="Pi4" /></p>
+<h3>My Target Configuration</h3>
+<ol>
+<li>No more D-Link router (unless providing access to guests)</li>
+<li>Raspberry Pi4 running <a href="http://ipfire.org">IpFire</a></li>
+<li>Fibre CPE direct into Pi4 for Internet Access (<span style="color: red">RED</span>)</li>
+<li>Second USB NIC connected to D-Link router for guest access (<span style="color: green">GREEN</span>)</li>
+<li>Pi4 as a wireless hotspot (<span style="color: blue">BLUE</span>)</li>
+</ol>
+<h2>The Result</h2>
+<p>Well success of course. But perhaps let me talk through some of the challenges.</p>
+<h2>Challenges in Phase 1</h2>
+<h4>Should I use the WAN port to connect the Pi4 and D-Link?</h4>
+<ul>
+<li>This is firstly not supported as the expectation that both the WAN IP is not the same as the WLAN.</li>
+<li>I used a standard port.</li>
+</ul>
+<h4>Do I have to do any port forwarding or masquerading on the D-Link and should the two devices share a subnet?</h4>
+<ul>
+<li>No, there was no configuration needed on the D-Link.</li>
+<li>Yes, I used the USB NIC of the Pi4 (GREEN Zone) I used to link up to the D-Link</li>
+</ul>
+<h4>How should I configure the Pi4 Raspbian OS?</h4>
+<ul>
+<li>I plugged the Cat 6 from the Fibre CPE into it the internal Pi4 Nic allowing DHCP to configure the internet IP address through the provider.</li>
+</ul>
+<h4>Did you masquerade?</h4>
+<ul>
+<li>Yes, I added a simple rule to masquerade the GREEN zone (link between two devices)</li>
+</ul>
+<pre><code># sudo iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
+</code></pre>
+<h4>Why did I not stop here?</h4>
+<ul>
+<li>It was insecure. I would need to spend a significant amount of time setting the firewall rules and debugging.</li>
+<li>Not to mention, installation a ton of software to calibrate network statistics.</li>
+</ul>
+<h2>Challenges in Phase 2</h2>
+<p>Now that we have a proof of concept, let's move onto IpFire.</p>
+<h4>Any tips for initial setup of Image onto SD-Card?</h4>
+<ul>
+<li>In writing the IpFire image to your SD-card ensure to disable the serial cable requirement so you can set it up easily with HDMI and USB keyboard - you need to edit the uENV.txt file
+on the flashed SD Card:</li>
+</ul>
+<pre><code># From
+SERIAL-CONSOLE=ON 
+# To
+SERIAL-CONSOLE=OFF
+</code></pre>
+<h4>How did you define the zones?</h4>
+<ul>
+<li>I used <span style="color: red">RED</span> for the Internet access (internal nic of Pi4)</li>
+<li><span style="color: green">GREEN</span> for all traffic from the D-Link router (USB nic to D-Link)</li>
+<li><span style="color: blue">BLUE</span> for wireless traffic using the Pi4 itself</li>
+<li>Be advised for access from GREEN to RED I used the transparent proxy included with IpFire</li>
+</ul>
+<h3>It works</h3>
+<p><img src="/images/ipfire.png" alt="IpFire" /></p>
+<p>It's been an amazing experience thus far, by no means an enterprise grade user interface or corporate backing for sexy bells and whistles.
+But it's a Toyota Corolla that does the job and well.</p>
+<h4>Supported features I am getting a ton of value around is:</h4>
+<ol>
+<li>Hardware graphing performance (memory, cpu, load)</li>
+<li>Firewall logs by country, port and IP</li>
+<li>Tcpdump on console for troubleshooting and viewing low-level packets</li>
+<li>Built-in proxy</li>
+<li>Easy support for multiple networks</li>
+<li>Wireless Hotspot easy configuration</li>
+<li>Proxy reports and logs</li>
+<li>Intrusion detection (multi-provider support)</li>
+<li>IP Address black lists</li>
+<li>Pakfire enables safe package installation and in-built plugin support</li>
+<li>DNS resolution and configuration</li>
+</ol>
+<h2>Tip</h2>
+<p>It may be worthwhile when you are done to review this helpful guide around best practices from <a href="https://blog.ipfire.org/post/firewall-configuration-recommendations-for-ipfire-users">IpFire Blog</a>
+A helpful tutorial that may <a href="https://www.hendgrow.com/ugs/HowTo-install-IPFire-on-a-Raspberry-Pi.pdf">guide</a> your journey.</p>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="text-center py-4 bg-white shadow mt-10">
+        <p>&copy; 2024 Dane Balia. All rights reserved.</p>
+    </footer>
+</body>
+</html>

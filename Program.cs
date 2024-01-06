@@ -7,6 +7,8 @@ using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 using Dumpify;
 using System.Text;
+using System.Text.RegularExpressions;
+
 class Program
 {
     static async Task Main(string[] args)
@@ -24,6 +26,7 @@ class Program
 
         var pipeline = new MarkdownPipelineBuilder()
              .UseYamlFrontMatter()
+             .UseAdvancedExtensions()
              .Build();
 
         var markdownFiles = Directory.GetFiles("MarkdownFiles", "*.md");
@@ -53,7 +56,8 @@ class Program
                     metadata.Dump();
 
                     string markdown = File.ReadAllText(file).Replace(frontMatter, "").TrimStart('-', ' ', '\r', '\n');
-                    string htmlContent = Markdown.ToHtml(markdown);
+                    string markdownWithGist = ConvertMarkdownToHtmlWithGist(markdown);
+                    string htmlContent = Markdown.ToHtml(markdownWithGist, pipeline);
 
                     var model = new BlogPostModel
                     {
@@ -111,4 +115,19 @@ class Program
 
         return sb.ToString().Trim();
     }
+
+
+    private static string ConvertMarkdownToHtmlWithGist(string markdownContent)
+    {
+        // Replace Gist placeholders
+        var replacedMarkdown = Regex.Replace(markdownContent, @"\[gist:(.*?)\]", m =>
+        {
+            string gistId = m.Groups[1].Value;
+            return $"<script src=\"https://gist.github.com/{gistId}.js\"></script>";
+        });
+
+        // Convert to HTML
+        return Markdown.ToHtml(replacedMarkdown);
+    }
+
 }

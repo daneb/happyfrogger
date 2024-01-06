@@ -4,6 +4,15 @@ A static content generation framework for the web.
 
 ![HappyFrogger](happyblogger.png) 
 
+## Features
+
+1. Templates with [Microsoft Razor](https://github.com/microsoft/razor)
+2. Markdown support with [Markdown-it](https://markdown-it.github.io/)
+3. Styling with [Tailwind](https://tailwindcss.com/)
+4. Blog supports [Gist](https://gist.github.com)
+5. Front Matters support through [YamlDotNet](https://github.com/aaubry/YamlDotNet)
+5. Built with [C#](https://dotnet.microsoft.com) 
+
 ## TODO
 
 1 Dynamic Index.html (manually defined at present)

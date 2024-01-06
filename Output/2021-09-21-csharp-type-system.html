@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C# Type System</title>
+    <link rel="stylesheet" href="output.css">
+    <style>
+        /* You can add custom styles here if needed */
+      .prose p {
+          margin-bottom: 1em; /* Adjust the value as needed */
+      }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <header class="text-center py-6 bg-white shadow">
+        <div class="flex justify-center items-center">
+            <a href="index.html">
+              <img src="images/me.png" alt="Profile Picture" class="w-12 h-12 rounded-full mr-4"/>
+            </a>
+            <h1 class="text-3xl font-bold">C# Type System</h1>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        <article>
+            <div class="prose prose-blue max-w-none">
+                <p><img src="/images/csharp_type_system.png" alt="TypeSystem" /></p>
+<p><strong><em>Exploring the Terminology:</em></strong></p>
+<p><em>C# 1's type system is static, explicit, and safe.</em></p>
+<p><strong>Statically</strong> typed is where each variable is of a particular type, and that type is known at compile time. In other words, the compiler does type checking at compilation time.</p>
+<p>In the test method <em>StaticTypeWontCompile()</em> you can see the string &quot;Hello&quot;. But because we gave it the type Object, the compiler sees its type as Object and not String. Hence the <em>.Length</em> method being unavailable. This test won't run because the compiler will state <strong>object does not contain a definition for 'Length'</strong>.</p>
+<script src="https://gist.github.com/e0ed55842fdaa89527ace839d2abfe34.js"></script>
+<p><strong>Explicitly Typed</strong> is where the type of every variables must be explicitly stated. Of course, explicit vs implicit types is only relevant in statically typed languages.</p>
+<script src="https://gist.github.com/85bd70dc0111f3663038e7e72eebe79b.js"></script>
+<p><strong>Safe Type System</strong> is the characteristic of code that allows the developer to be certain that a value or object will exhibit certain properties so that he/she can use it in a specific way without fear of unexpected or undefined behavior.</p>
+<p>In the method <em>ThisIsSafe()</em> the compiler will clearly state that an <em>Operator '+' cannot be applied to operands of type 'int' and 'bool'</em>. This safety applies for the majority of C# up until we get to Collections, Inheritance, Overriding and Interfaces as witnessed in method <em>ThisIsUnsafe</em> which compiles perfectly.</p>
+<script src="https://gist.github.com/c30ff2e9ad9c122ea12af3ba3532b159.js"></script>
+<p><strong>Reference</strong></p>
+<ol>
+<li><a href="https://csharpindepth.com/">C# In Depth - Jon Skeet</a></li>
+<li><a href="https://stackoverflow.com/questions/859186/why-is-c-sharp-statically-typed">StackOverflow Why Is CSharp Statically Typed</a></li>
+<li><a href="https://stackoverflow.com/questions/2437469/what-is-type-safe-in-net">StackOverflow What is Type Safey in .NET</a></li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/types/">C#s Type System - Microsoft Docs</a></li>
+</ol>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="text-center py-4 bg-white shadow mt-10">
+        <p>&copy; 2024 Dane Balia. All rights reserved.</p>
+    </footer>
+</body>
+</html>

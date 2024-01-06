@@ -13,9 +13,9 @@ A static content generation framework for the web.
 5. Front Matters support through [YamlDotNet](https://github.com/aaubry/YamlDotNet)
 5. Built with [C#](https://dotnet.microsoft.com) 
 
-## TODO
+## TO ADD
 
-1 Dynamic Index.html (manually defined at present)
+1. Dynamic Index.html (manually defined at present)
 2. Copy of output to release folder for github pages
 3. How to not generate markdown for files un-changed
 

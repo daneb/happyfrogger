@@ -8,7 +8,8 @@ module.exports = {
     extend: {},
   },
   plugins: [
-    'tailwindcss/typography'
+    require('@tailwindcss/typography'),
+    require('tailwind-children'),
   ],
 }
 

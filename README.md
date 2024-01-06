@@ -18,6 +18,7 @@ A static content generation framework for the web.
 1. Dynamic Index.html (manually defined at present)
 2. Copy of output to release folder for github pages
 3. How to not generate markdown for files un-changed
+4. Move to make it agnostic (for others use)* Maybe.
 
 ## Generating Tailwind for static HTML
 

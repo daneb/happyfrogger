@@ -4,7 +4,7 @@ date: 2020-12-01 12:00:00
 category: poetry
 ---
 
-![Discouragement](/images/discouragement.jpg)
+![Discouragement](images/discouragement.jpg)
 
 The road of life \
 ah yes the road of life

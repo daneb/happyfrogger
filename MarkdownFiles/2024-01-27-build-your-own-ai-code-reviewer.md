@@ -45,7 +45,7 @@ My go-to was [LM Studio](https://lmstudio.ai/). Keep these points in mind:
 
 ### Interacting with the LLM
 
-LM Studio facilitates interactions via the OpenAI API. Here's a sample interaction using curl or [Httpie](https://httpie.io):
+LM Studio facilitates interactions similarly to the OpenAI API. Here's a sample interaction using curl or [Httpie](https://httpie.io):
 
 ```json
 { 

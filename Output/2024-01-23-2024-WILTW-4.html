@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What I learned this Week</title>
+    <link rel="stylesheet" href="output.css">
+    <style>
+        /* You can add custom styles here if needed */
+      .prose p {
+          margin-bottom: 1em; /* Adjust the value as needed */
+      }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <header class="text-center py-6 bg-white shadow">
+        <div class="flex justify-center items-center">
+            <a href="index.html">
+              <img src="images/me.png" alt="Profile Picture" class="w-12 h-12 rounded-full mr-4"/>
+            </a>
+            <h1 class="text-3xl font-bold">What I learned this Week</h1>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        <article>
+            <div class="prose prose-blue max-w-none">
+                <h2>LLMs</h2>
+<p>If you want to get started with an LLM locally, for privacy concerns or exploration
+give <a href="http://lmstudio.ai">LM Studio</a> a shot.
+In selecting the right LLM for you requirements check out <a href="https://huggingface.co/models?pipeline_tag=text-generation">this list of LLMs</a>
+or <a href="https://github.com/continuedev/what-llm-to-use">What LLM to use</a>.
+The beauty of LM Studio is that you can easily maintain your LLMs,
+but also interact with them via the common OpenAI API protocol.</p>
+<h2>How to setup your own LazyNvim Plugin</h2>
+<p>I wrote a blog post on my building of a LazyVim plugin
+that integrated with LM Studio.</p>
+<p><a href="https://m4xshen.dev/posts/develop-a-neovim-plugin-in-lua/">Helpful reference</a></p>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="text-center py-4 bg-white shadow mt-10">
+        <p>&copy; 2024 Dane Balia. All rights reserved.</p>
+    </footer>
+</body>
+</html>

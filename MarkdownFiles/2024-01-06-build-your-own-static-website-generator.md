@@ -1,6 +1,6 @@
 ---
 title: Build your own static web site generator
-date: 2022-04-01T00:00:00-04:00
+date: 2024-01-14T00:00:00-04:00
 category: blog
 ---
 

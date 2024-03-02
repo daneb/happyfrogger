@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Github Dependabot API &amp; Dumpify</title>
+    <link rel="stylesheet" href="output.css">
+    <style>
+        /* You can add custom styles here if needed */
+      .prose p {
+          margin-bottom: 1em; /* Adjust the value as needed */
+      }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <header class="text-center py-6 bg-white shadow">
+        <div class="flex justify-center items-center">
+            <a href="index.html">
+              <img src="images/me.png" alt="Profile Picture" class="w-12 h-12 rounded-full mr-4"/>
+            </a>
+            <h1 class="text-3xl font-bold">Github Dependabot API &amp; Dumpify</h1>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        <article>
+            <div class="prose prose-blue max-w-none">
+                <h2>Using Dumpify for Neovim debugging in C#</h2>
+<p>This is a great aid if you looking to get insight into debug information via console, while not using a debugger. DAP sucks.</p>
+<p><a href="https://github.com/MoaidHathot/Dumpify">Dumpify</a></p>
+<h2>Retrieving dependadot alerts from Github API</h2>
+<pre><code class="language-python">import csv
+import requests
+<h1 id="configuration">Configuration</h1>
+<p>OWNER = 'your_owner_name'  # GitHub Owner name
+REPOSITORIES = ['repo1', 'repo2']  # List of repositories
+PAT = 'your_personal_access_token'  # GitHub Personal Access Token
+CSV_FILE = 'dependabot_alerts.csv'  # Output CSV file name</p>
+<h1 id="initialize-a-session">Initialize a session</h1>
+<p PAT="">session = requests.Session()
+session.headers.update({
+&quot;Accept&quot;: &quot;application/vnd.github+json&quot;,
+&quot;Authorization&quot;: f&quot;Bearer &quot;,
+&quot;X-GitHub-Api-Version&quot;: &quot;2022-11-28&quot;
+})</p>
+<p owner="" repo="" response.status_code="">def fetch_dependabot_alerts(owner, repo):
+&quot;&quot;&quot;Fetch Dependabot alerts for a specific repository using the session.&quot;&quot;&quot;
+url = f&quot;https://api.github.com/repos///dependabot/alerts?state=open&amp;severity=critical&amp;per_page=100&quot;
+response = session.get(url)
+if response.status_code == 200:
+return response.json()
+else:
+print(f&quot;Failed to fetch alerts for : &quot;)
+return []</p>
+<p>def process_alerts(alerts, repo):
+&quot;&quot;&quot;Process each alert to extract relevant fields, including the repository name.&quot;&quot;&quot;
+processed_alerts = []
+for alert in alerts:
+processed_alert = {
+&quot;repository&quot;: repo,
+&quot;number&quot;: alert.get(&quot;number&quot;),
+&quot;state&quot;: alert.get(&quot;state&quot;),
+&quot;dependency_ecosystem&quot;: alert.get(&quot;dependency&quot;, ).get(&quot;package&quot;, ).get(&quot;ecosystem&quot;, &quot;&quot;),
+&quot;dependency_name&quot;: alert.get(&quot;dependency&quot;, ).get(&quot;package&quot;, ).get(&quot;name&quot;, &quot;&quot;),
+&quot;security_advisory_description&quot;: alert.get(&quot;security_advisory&quot;, ).get(&quot;description&quot;, &quot;&quot;)
+}
+processed_alerts.append(processed_alert)
+return processed_alerts</p>
+<p>def write_to_csv(data):
+&quot;&quot;&quot;Write the processed alert data to a CSV file.&quot;&quot;&quot;
+with open(CSV_FILE, mode='w', newline='') as file:
+writer = csv.DictWriter(file, fieldnames=data[0].keys())
+writer.writeheader()
+for row in data:
+writer.writerow(row)</p>
+<p CSV_FILE="">def main():
+&quot;&quot;&quot;Main function to orchestrate the fetching, processing, and writing of Dependabot alert data.&quot;&quot;&quot;
+all_alerts = []
+for repo in REPOSITORIES:
+alerts = fetch_dependabot_alerts(OWNER, repo)
+if alerts:
+processed_alerts = process_alerts(alerts, repo)
+all_alerts.extend(processed_alerts)
+if all_alerts:
+write_to_csv(all_alerts)
+print(f&quot;Data written to &quot;)
+else:
+print(&quot;No data to write.&quot;)</p>
+<p>if <strong>name</strong> == &quot;<strong>main</strong>&quot;:
+main()</p>
+<p></code></pre></p>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="text-center py-4 bg-white shadow mt-10">
+        <p>&copy; 2024 Dane Balia. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -29,7 +29,34 @@
 This is where I stumbled onto the following automation to assist with TypeScript to UML.
 Automatic generation of UML from typrscript.</p>
 <p><a href="https://github.com/demike/TsUML2">TsUML2</a></p>
+<p>There is also a good option for C# users:</p>
+<p><a href="https://github.com/dotMorten/DotNetOMDGenerator">Generate OMD</a></p>
 <h1>Git, EditorConfig and Darn Windows Users</h1>
+<p>If you in a team and the only Linux/Mac user and using Git. This is the setting you need for you git config.</p>
+<pre><code>core.autocrlf=false
+</code></pre>
+<h1>Git access multiple accounts</h1>
+<p>Adapt this and add to your ~/.ssh/config</p>
+<pre><code class="language-yaml"># Enterprise account
+Host github.com-enterprise
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_rsa_github_enterprise
+  IdentitiesOnly yes
+<h1 id="personal-account">Personal account</h1>
+<p>Host github.com-personal
+HostName github.com
+User git
+IdentityFile ~/.ssh/id_rsa_github_personal
+IdentitiesOnly yes
+</code></pre></p>
+<p>Make sure for each repo you set the following to match:</p>
+<pre><code class="language-sh">git config user.name &quot;Your Enterprise Username&quot;
+git config user.email &quot;your_enterprise_email@example.com&quot;
+</code></pre>
+<p>Then define your remote origin:</p>
+<pre><code>git remote set-url origin git@github.com-enterprise:Organization/repo.git
+</code></pre>
 <h1>High Fidelity Tests</h1>
 <p>This is an absolutely well articulated blog post on Testing.
 It emphasizes to pursue high fidelity tests. That is tests, that are closest to reality.

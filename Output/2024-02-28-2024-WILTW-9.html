@@ -30,12 +30,10 @@
 <h2>Retrieving dependadot alerts from Github API</h2>
 <pre><code class="language-python">import csv
 import requests
-<h1 id="configuration">Configuration</h1>
 <p>OWNER = 'your_owner_name'  # GitHub Owner name
 REPOSITORIES = ['repo1', 'repo2']  # List of repositories
 PAT = 'your_personal_access_token'  # GitHub Personal Access Token
 CSV_FILE = 'dependabot_alerts.csv'  # Output CSV file name</p>
-<h1 id="initialize-a-session">Initialize a session</h1>
 <p PAT="">session = requests.Session()
 session.headers.update({
 &quot;Accept&quot;: &quot;application/vnd.github+json&quot;,

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnerSource. SPACE. DORA. DEVEX.</title>
+    <link rel="stylesheet" href="output.css">
+    <style>
+        /* You can add custom styles here if needed */
+      .prose p {
+          margin-bottom: 1em; /* Adjust the value as needed */
+      }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <header class="text-center py-6 bg-white shadow">
+        <div class="flex justify-center items-center">
+            <a href="index.html">
+              <img src="images/me.png" alt="Profile Picture" class="w-12 h-12 rounded-full mr-4"/>
+            </a>
+            <h1 class="text-3xl font-bold">InnerSource. SPACE. DORA. DEVEX.</h1>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        <article>
+            <div class="prose prose-blue max-w-none">
+                <h2>Query AGIC rules (service endpoints)</h2>
+<h3>Query the data</h3>
+<pre><code class="language-sh"> kubectl --kubeconfig ~/.kube/my-config get ingress --all-namespaces -o json &gt; ingresses.json
+</code></pre>
+<h3>Pretty Print</h3>
+<pre><code class="language-sh">cat ingresses.json | jq -r '
+.items[] |
+{
+  namespace: .metadata.namespace,
+  name: .metadata.name,
+  rules: .spec.rules[]
+} |
+&quot;Ingress Name: \(.name),Host: \(.rules.host),Paths: \(.rules.http.paths[] | &quot;Path: \(.path), Service Name: \(.backend.service.name), Service Port: \(.backend.service.port.number)&quot;)&quot;'
+</code></pre>
+<h2>InnerSource</h2>
+<blockquote>
+<p>What is InnerSource?
+Simplistically it's nothing more then when a company tries to do open-source but in a closed space.</p>
+</blockquote>
+<p><a href="https://www.youtube.com/watch?v=tfPhkZ87bEY">3 minute video I found helpful</a></p>
+<blockquote>
+<p>InnerSource is enabled by tools and processes, but it is also a change
+to the culture. The biggest change is allowing mistakes, talking
+about them, and learning from them.</p>
+</blockquote>
+<p><img src="innersource.png" alt="alt text" /></p>
+<h2>DORA vs SPACE vs DEVEX</h2>
+<p>I found this really great analogy:</p>
+<p><img src="Compare.jpg" alt="Linked" /></p>
+<h2>RACI Matrix</h2>
+<p>A RACI chart, also called a RACI matrix, is a type of responsibility assignment matrix (RAM) in project management. In practice, it’s a simple spreadsheet or table that lists all stakeholders on a project and their level involvement in each task, denoted with the letters R, A, C or I. Once these roles are defined, assignments can be attributed to the roles and work can begin.</p>
+<p>R, A, C, I stands for:</p>
+<p>Responsible
+Accountable
+Consulted
+Informed</p>
+<p><a href="https://www.forbes.com/advisor/business/raci-chart/#What_Is_A_Raci_Chart?">Forbes Link</a></p>
+<h2>Team Topologies</h2>
+<h4>1. Team Topologies Overview</h4>
+<p>Team Topologies, as described by Matthew Skelton and Manuel Pais in their book “Team Topologies,” focuses on optimizing team interactions and alignments with business goals. The core team types and interaction modes are key concepts in this framework.</p>
+<h4>2. Core Team Types</h4>
+<p><strong>a. Stream-Aligned Teams</strong></p>
+<p>• <strong>Definition</strong>: Teams aligned to a flow of work from a segment of the business domain.
+• <strong>Purpose</strong>: Delivering valuable increments of work to end-users continuously.
+• <strong>Example</strong>: A team dedicated to a specific product feature, such as the user onboarding process or payment gateway.</p>
+<p><strong>b. Enabling Teams</strong></p>
+<p>• <strong>Definition</strong>: Teams that assist other teams to overcome obstacles and adopt new technologies or practices.
+• <strong>Purpose</strong>: Providing specialized knowledge and facilitating the adoption of best practices.
+• <strong>Example</strong>: A team focused on helping other teams implement CI/CD pipelines or adopt cloud technologies.</p>
+<p><strong>c. Complicated-Subsystem Teams</strong></p>
+<p>• <strong>Definition</strong>: Teams responsible for building and maintaining complex subsystems that require specialized knowledge.
+• <strong>Purpose</strong>: Handling parts of the system that require deep expertise and cannot be easily managed by stream-aligned teams.
+• <strong>Example</strong>: A team dedicated to developing a high-performance database engine or a sophisticated machine learning model.</p>
+<p><strong>d. Platform Teams</strong></p>
+<p>• <strong>Definition</strong>: Teams that build and maintain platforms used by other teams to deliver work.
+• <strong>Purpose</strong>: Providing self-service APIs, tools, and services to enable other teams to deliver software efficiently.
+• <strong>Example</strong>: A team managing the internal cloud infrastructure, CI/CD tools, or authentication services.</p>
+<h4>3. Interaction Modes</h4>
+<p><strong>a. Collaboration</strong></p>
+<p>• <strong>Description</strong>: Teams work together for a defined period to achieve a specific outcome.
+• <strong>Use Case</strong>: When multiple teams need to work together to deliver a complex feature that spans different domains.</p>
+<p><strong>b. X-as-a-Service</strong></p>
+<p>• <strong>Description</strong>: One team provides a service that other teams can consume independently.
+• <strong>Use Case</strong>: Platform teams offering CI/CD pipelines as a service to stream-aligned teams.</p>
+<p><strong>c. Facilitating</strong></p>
+<p>• <strong>Description</strong>: Enabling teams facilitate and assist other teams to overcome specific challenges.
+• <strong>Use Case</strong>: An enabling team helping a stream-aligned team adopt a new testing framework.</p>
+<h4>4. Common Practices for Organizing Delivery Teams</h4>
+<p><strong>a. Define Clear Team Boundaries and Responsibilities</strong></p>
+<p>• <strong>Clarity</strong>: Ensure each team has a clear mission and well-defined responsibilities to avoid overlaps and confusion.
+• <strong>Autonomy</strong>: Empower teams to make decisions within their domain to increase accountability and efficiency.</p>
+<p><strong>b. Optimize for Flow</strong></p>
+<p>• <strong>Stream Alignment</strong>: Align teams to the flow of work that delivers value to customers. Avoid organizing teams around rigid component boundaries.
+• <strong>Value Streams</strong>: Identify and organize around value streams to ensure teams can deliver end-to-end features.</p>
+<p><strong>c. Promote Cross-Functional Collaboration</strong></p>
+<p>• <strong>Skills Diversity</strong>: Ensure teams have the necessary skills to deliver complete solutions, including development, QA, UX, and operations.
+• <strong>Collaboration Tools</strong>: Use tools and practices that facilitate seamless communication and collaboration, such as agile boards, chat platforms, and video conferencing.</p>
+<p><strong>d. Facilitate Continuous Improvement</strong></p>
+<p>• <strong>Feedback Loops</strong>: Establish regular feedback loops through retrospectives, reviews, and one-on-one meetings to identify areas for improvement.
+• <strong>Learning Culture</strong>: Encourage continuous learning and improvement by providing access to training, conferences, and knowledge-sharing sessions.</p>
+<p><strong>e. Balance Stability and Innovation</strong></p>
+<p>• <strong>Stable Base</strong>: Maintain a stable platform and set of practices for the majority of the work while allowing for innovation and experimentation in a controlled manner.
+• <strong>Innovation Time</strong>: Allocate time for teams to explore new ideas and technologies that can drive future improvements.</p>
+<h4>5. Practical Implementation Tips</h4>
+<p><strong>a. Start Small and Scale Gradually</strong></p>
+<p>• Pilot new team structures with a small group before scaling across the organization.
+• Gather feedback and adjust based on what works and what doesn’t.</p>
+<p><strong>b. Use Metrics to Guide Decisions</strong></p>
+<p>• Measure team performance using relevant metrics such as lead time, deployment frequency, and defect rates.
+• Use these metrics to identify bottlenecks and areas for improvement.</p>
+<p><strong>c. Encourage Ownership and Accountability</strong></p>
+<p>• Foster a sense of ownership by allowing teams to take full responsibility for their services or components.
+• Implement practices like DevOps where teams are responsible for both development and operations.</p>
+<p><strong>Conclusion</strong>
+Organizing delivery teams effectively requires a thoughtful approach that aligns with business goals and fosters collaboration, autonomy, and continuous improvement. By leveraging the principles of Team Topologies, organizations can create an environment where teams are empowered to deliver high-quality software efficiently and adapt to changing needs.</p>
+<h2>What to do if you blank in an interview?</h2>
+<p>It’s natural to occasionally lose your train of thought or feel flustered during an interview. Here’s a structured approach to handle such situations gracefully:</p>
+<p><strong>1. Pause and Take a Breath</strong></p>
+<p>• <strong>Stay Calm</strong>: Take a deep breath to calm your nerves. It’s okay to take a moment to collect your thoughts.
+• <strong>Pause</strong>: Use a brief pause to compose yourself. This can also give the impression that you are considering your answer carefully.</p>
+<p><strong>2. Ask for Clarification</strong></p>
+<p>• <strong>Clarify the Question</strong>: If you’re uncertain about the question, politely ask the interviewer to repeat or clarify it. This can give you additional time to think and ensure you’re addressing the right topic.
+• Example: “Could you please repeat the question? I want to make sure I address it correctly.”</p>
+<p><strong>3. Acknowledge and Redirect</strong></p>
+<p>• <strong>Acknowledge the Pause</strong>: If you’ve forgotten your point mid-answer, acknowledge it briefly and redirect the conversation.
+• Example: “I apologize, I seem to have lost my train of thought. Let me start again.”
+• <strong>Restart or Pivot</strong>: Either restart your answer or pivot to a related point that you can speak about confidently.</p>
+<p><strong>4. Use Filler Phrases</strong></p>
+<p>• <strong>Filler Phrases</strong>: Use phrases like “That’s a great question” or “Let me think about that for a moment” to buy yourself a few seconds to regain your composure.
+• Example: “That’s a great question. I think the key point here is…”</p>
+<p><strong>5. Summarize and Simplify</strong></p>
+<p>• <strong>Summarize Your Key Points</strong>: If you’re struggling with a detailed response, summarize your key points and then expand on them.
+• Example: “In summary, my approach would focus on collaboration, continuous improvement, and leveraging best practices. To elaborate…”</p>
+<p><strong>6. Be Honest</strong></p>
+<p>• <strong>Admit if You Don’t Know</strong>: If you genuinely don’t know the answer, it’s better to admit it than to fumble through an uncertain response.
+• Example: “I’m not sure about the exact details, but I would approach it by doing XYZ…”</p>
+<p><strong>7. Offer to Follow Up</strong></p>
+<p>• <strong>Follow-Up</strong>: If applicable, offer to follow up with a more detailed answer after the interview.
+• Example: “I don’t have the exact information on hand, but I’d be happy to follow up with a detailed response after the interview.”</p>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="text-center py-4 bg-white shadow mt-10">
+        <p>&copy; 2024 Dane Balia. All rights reserved.</p>
+    </footer>
+</body>
+</html>

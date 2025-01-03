@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Laptop Setup for Remote Work as a Consultant</title>
+    <link rel="stylesheet" href="output.css">
+    <style>
+        /* You can add custom styles here if needed */
+      .prose p {
+          margin-bottom: 1em; /* Adjust the value as needed */
+      }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <header class="text-center py-6 bg-white shadow">
+        <div class="flex justify-center items-center">
+            <a href="index.html">
+              <img src="images/me.png" alt="Profile Picture" class="w-12 h-12 rounded-full mr-4"/>
+            </a>
+            <h1 class="text-3xl font-bold">My Laptop Setup for Remote Work as a Consultant</h1>
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        <article>
+            <div class="prose prose-blue max-w-none">
+                <h1>Hardware</h1>
+<h3>Remote Server Hardware</h3>
+<h1>Software</h1>
+<h2>Mac</h2>
+<h2>Linux</h2>
+<h2>Windows</h2>
+<ol>
+<li></li>
+</ol>
+<h2>Version Managers</h2>
+<ol>
+<li>Node.js - nvm</li>
+<li>Angular versions - npx</li>
+</ol>
+<pre><code class="language-sh">npx @angular/cli@SPECIFIC_VERSION new my-app
+npx ng generate component my-component
+npx ng serve (npm start)
+</code></pre>
+<ol start="3">
+<li>Ruby - rvm</li>
+</ol>
+<h3>Remote Server Configuration</h3>
+<h3>SSH Keys</h3>
+<h4>Remote Server Management</h4>
+<h3>VPN</h3>
+<h3>Networking</h3>
+<h3>Connecting to Client Systems</h3>
+<pre><code class="language-sh">sshuttle --dns -r dane@ubuntu-laptop 10.250.0.0/16 10.20.0.0/16
+</code></pre>
+<h3>Connecting to Minikube Dashboard</h3>
+<pre><code class="language-sh">ssh -L 8001:127.0.0.1:8001 dane@ubuntu-laptop
+</code></pre>
+<h1>Humanware</h1>
+<h3>Standing desk</h3>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="text-center py-4 bg-white shadow mt-10">
+        <p>&copy; 2025 Dane Balia. All rights reserved.</p>
+    </footer>
+</body>
+</html>

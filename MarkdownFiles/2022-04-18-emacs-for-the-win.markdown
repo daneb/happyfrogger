@@ -3,6 +3,9 @@ layout: single
 title: Emacs For The Win
 date:   2022-04-18 19:28:43 +0200
 categories: tech
+subcategory: ide
+description: Why I believe Emacs adds value
+slug: emacs-for-the-win
 ---
 
 ![Emacs](/images/doom.png)

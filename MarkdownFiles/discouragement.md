@@ -2,6 +2,7 @@
 title: "Discouragement"
 date: 2020-12-01 12:00:00
 category: creative
+description: When you feel knocked down
 ---
 
 ![Discouragement](images/discouragement.jpg)

@@ -2,6 +2,9 @@
 title: "Our adventure continues"
 date: 2021-09-06 10:16:00 +0200
 category: creative
+description: A poem to my beloved
+subcategory: poem
+slug: our-adventure
 ---
 
 ![Darling](/images/darling.jpg) 

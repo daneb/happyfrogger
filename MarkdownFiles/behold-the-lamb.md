@@ -2,6 +2,7 @@
 title: "Behold the Lamb of God"
 date: 2023-12-28 00:30:00
 category: faith
+subcategory: sermon
 ---
 
 ![Behold the Lamb](images/lamb.jpg) 

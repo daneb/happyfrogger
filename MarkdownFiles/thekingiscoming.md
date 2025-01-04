@@ -2,7 +2,7 @@
 title: "The King is Coming"
 date: 2025-01-03 10:16:00 +0200
 category: creative
-subcategory: poetry
+subcategory: poem
 description: A poem about the anticipation of Christ's return and the contrast between heavenly preparation and earthly indifference.
 slug: the-king-is-coming
 ---

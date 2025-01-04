@@ -2,6 +2,9 @@
 title: Build your own static web site generator
 date: 2024-01-14T00:00:00-04:00
 category: tech
+subcategory: diy
+description: Its quick and easy to build a blog engine
+slug: static-website-gen
 ---
 
 ![HappyFrogger](images/happyfrogger.jpg)

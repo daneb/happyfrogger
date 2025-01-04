@@ -2,6 +2,8 @@
 title: "My Tips on Preparing for a Conference Talk"
 date: 2022-06-19 21:55:01 +2:00
 category: creative
+subcategory: skills
+slug: tips-on-conf-talks
 ---
 
 ![Tips on Presenting](images/techtalk.jpg) 

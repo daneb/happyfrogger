@@ -1,7 +1,9 @@
 ---
 title: Guideposts to Measuring Developers
 date: 2024-08-05T00:00:00-04:00
-category: leadership
+category: tech
+subcategory: leadership
+description: The conflict in measurement
 ---
 
 ![MeasuringDevs](images/MeasuringDevelopers.png)

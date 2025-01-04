@@ -2,6 +2,9 @@
 title: "Raising Kids As A Dad"
 date: 2021-07-24 22:16:00 +0200
 category: creative
+subcategory: parenting
+description: How to raise kids in a busy world
+slug: raising-kids
 ---
 
 ![Raising Kids](/images/raisingkids.jpg)

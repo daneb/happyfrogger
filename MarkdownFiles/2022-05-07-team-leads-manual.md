@@ -1,7 +1,8 @@
 ---
 title: Team Leads Manual
 date:   2022-05-07 23:54:43 +0200
-category: leadership
+category: tech
+subcategory: leadership
 ---
 
 ![Leadership](/images/serve.jpg)

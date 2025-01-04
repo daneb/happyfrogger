@@ -1,3 +1,5 @@
+using YamlDotNet.Serialization;
+
 namespace HappyFrog.Models;
 
 public class CategoryPageModel
@@ -7,6 +9,38 @@ public class CategoryPageModel
     public string Description { get; set; }
     public IEnumerable<string> SubCategories { get; set; }
     public IEnumerable<BlogPostModel> Posts { get; set; }
+}
+
+public class BookChapterModel : BlogPostModel
+{
+    [YamlMember(Alias = "chapter_number")]
+    public int ChapterNumber { get; set; }
+
+    [YamlMember(Alias = "progress")]
+    public int Progress { get; set; }
+
+    [YamlMember(Alias = "previous_chapter")]
+    public string PreviousChapter { get; set; }
+
+    [YamlMember(Alias = "next_chapter")]
+    public string NextChapter { get; set; }
+
+    [YamlMember(Alias = "study_resources")]
+    public List<StudyResource> StudyResources { get; set; }
+
+    public string TableOfContents { get; set; }
+}
+
+public class StudyResource
+{
+    [YamlMember(Alias = "title")]
+    public string Title { get; set; }
+
+    [YamlMember(Alias = "description")]
+    public string Description { get; set; }
+
+    [YamlMember(Alias = "url")]
+    public string Url { get; set; }
 }
 
 public static class CategoryInfo

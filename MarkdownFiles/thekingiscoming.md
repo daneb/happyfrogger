@@ -6,6 +6,7 @@ subcategory: poem
 description: A poem about the anticipation of Christ's return and the contrast between heavenly preparation and earthly indifference.
 slug: the-king-is-coming
 ---
+
 # The King is Coming
 
 Up in the sky, the tempests rage,\

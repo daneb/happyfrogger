@@ -3,6 +3,7 @@ title: "The Less Talked about area of Success"
 date: 2023-05-08 15:10:00 +0200
 category: tech
 subcategory: leadership
+slug: less-talked-about-area
 ---
 
 ![Marriage](/images/happymarriage.jpg)

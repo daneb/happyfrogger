@@ -4,6 +4,7 @@ date: 2024-08-05T00:00:00-04:00
 category: tech
 subcategory: leadership
 description: The conflict in measurement
+slug: measuring-developers
 ---
 
 ![MeasuringDevs](images/MeasuringDevelopers.png)

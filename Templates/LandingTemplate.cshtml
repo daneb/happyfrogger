@@ -120,7 +120,7 @@
                     @foreach (var post in Model.CreativePosts.Take(3))
                     {
                         <li>
-                            <a href="./@post.Slug" class="block hover:opacity-80">
+                            <a href="./@(post.Slug).html" class="block hover:opacity-80">
                                 <span class="block text-lg">@post.Title</span>
                                 <span class="text-gray-500">@post.PublishDate.ToString("MMM dd, yyyy")</span>
                             </a>

@@ -7,30 +7,65 @@
     <link rel="stylesheet" href="output.css">
     <style>
         /* You can add custom styles here if needed */
-      .prose p {
-          margin-bottom: 1em; /* Adjust the value as needed */
-      }
+        .prose p {
+            margin-bottom: 1em; /* Adjust the value as needed */
+        }
+
+        /* Gist styling */
+        .gist-container {
+            margin: 1.5rem 0;
+        }
+
+        .gist .blob-wrapper {
+            border-radius: 0.5rem;
+        }
+
+        .gist .highlight {
+            background: #f8f9fa;
+        }
+
+        /* Ensure gists are responsive */
+        .gist .gist-file {
+            max-width: 100%;
+            overflow: auto;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
-    <header class="text-center py-6 bg-white shadow">
-        <div class="flex justify-center items-center">
-            <a href="index.html">
-              <img src="images/me.png" alt="Profile Picture" class="w-12 h-12 rounded-full mr-4"/>
+<header class="text-center py-6 bg-white shadow">
+    <div class="max-w-4xl mx-auto px-4">
+        <div class="flex items-center justify-between mb-4">
+            <a href="@(Model.Category).html" class="inline-flex items-center text-gray-600 hover:text-primary-blue">
+                <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                Back to @(char.ToUpper(Model.Category[0]) + Model.Category.Substring(1))
             </a>
+            <a href="index.html" class="text-gray-600 hover:text-primary-blue">
+                Home
+            </a>
+        </div>
+        <div class="flex justify-center items-center">
             <h1 class="text-3xl font-bold">@Model.Title</h1>
         </div>
-    </header>
-    <main class="max-w-4xl mx-auto px-4 py-8">
-        <article>
-            <div class="prose prose-blue max-w-none">
-                @Raw(Model.Content)
-            </div>
-        </article>
-    </main>
+        @if (!string.IsNullOrEmpty(Model.SubCategory))
+        {
+        <div class="mt-2 text-gray-600">
+            Category: @Model.SubCategory
+        </div>
+        }
+    </div>
+</header>
+<main class="max-w-4xl mx-auto px-4 py-8">
+    <article>
+        <div class="prose prose-blue max-w-none">
+            @Raw(Model.Content)
+        </div>
+    </article>
+</main>
 
-    <footer class="text-center py-4 bg-white shadow mt-10">
-        <p>&copy; @(DateTime.Now.Year) Dane Balia. All rights reserved.</p>
-    </footer>
+<footer class="text-center py-4 bg-white shadow mt-10">
+    <p>&copy; @(DateTime.Now.Year) Dane Balia. All rights reserved.</p>
+</footer>
 </body>
 </html>

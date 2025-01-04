@@ -46,7 +46,8 @@ class Program
                 {
                     var metadata = deserializer.Deserialize<FrontMatter>(frontMatter);
                     string markdown = File.ReadAllText(file).Replace(frontMatter, "").TrimStart('-', ' ', '\r', '\n');
-                    string htmlContent = Markdown.ToHtml(markdown, pipeline);
+                    string markdownWithGist = ConvertMarkdownToHtmlWithGist(markdown);
+                    string htmlContent = Markdown.ToHtml(markdownWithGist, pipeline);
 
                     var post = new BlogPostModel
                     {
@@ -178,7 +179,6 @@ class Program
         }
     }
 
-
     private static string ConvertMarkdownToHtmlWithGist(string markdownContent)
     {
         // Replace Gist placeholders
@@ -191,5 +191,6 @@ class Program
         // Convert to HTML
         return Markdown.ToHtml(replacedMarkdown);
     }
+   
 
 }

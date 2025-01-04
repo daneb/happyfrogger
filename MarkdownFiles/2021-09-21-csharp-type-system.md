@@ -1,7 +1,10 @@
 ---
 title: "C# Type System"
 date: 2021-09-21 10:01:22 +0200
-category: blog 
+category: tech 
+subcategory: csharp
+description: Fundamentals
+slug: type-system
 ---
 
 ![TypeSystem](/images/csharp_type_system.png)

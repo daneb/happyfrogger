@@ -1,7 +1,10 @@
 ---
 title: "Refocusing One-on-Ones"
 date: 2022-09-05 07:22:22 +0200
-category: blog 
+category: tech
+subcategory: leadership
+description: My strategy for one-on-ones
+slug: refocus-one-on-ones
 ---
 
 ![Leadership](/images/head-shot.jpg)

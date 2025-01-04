@@ -1,7 +1,10 @@
 ---
 title: "Quick Tour Of Generics In C#"
 date: 2021-09-21 10:25:22 +0200
-category: blog 
+description: Fundamentals
+category: tech
+subcategory: csharp
+slug: quick-tour-generics
 ---
 
 ![Generics](/images/csharp.jpg) 

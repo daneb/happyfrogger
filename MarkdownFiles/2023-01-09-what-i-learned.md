@@ -1,7 +1,10 @@
 ---
 title: "What I learned this week"
 date: 2023-01-11 07:10:00 +0200
-category: blog 
+category: creative
+subcategory: wiltw
+description: Skills development
+slug: wiltw-2023-01-11
 ---
 
 ### Quotes:

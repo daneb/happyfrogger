@@ -1,7 +1,10 @@
 ---
 title: "C# Value and Reference Types"
 date: 2021-09-21 10:22:22 +0200
-category: blog 
+category: tech
+description: Fundamentals
+subcategory: csharp
+slug: value-and-reference
 ---
 
 **Value** and **Reference** types are covered frequently all over the internet, in blog posts, technical articles and forums. Why? Because it's easy to develop software for a long time without stopping to 'smell the roses'. Or in this case, understand what they are and how they work. So here's a note to self, or you.

@@ -1,0 +1,103 @@
+@model HappyFrog.Models.CategoryPageModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Title - Dane Balia</title>
+    <link rel="stylesheet" href="output.css">
+</head>
+<body class="min-h-screen bg-white">
+    <!-- Header -->
+    <header class="max-w-content mx-auto px-4 py-12">
+        <a href="index.html" class="inline-flex items-center text-gray-600 hover:text-primary-blue mb-8">
+            <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Home
+        </a>
+        
+        <div class="flex items-center space-x-4">
+            <div class="text-primary-blue">
+                @switch (Model.Category)
+                {
+                    case "tech":
+                        <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        break;
+                    case "faith":
+                        <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                        break;
+                    default:
+                        <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        break;
+                }
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">@Model.Title</h1>
+                <p class="text-gray-600">@Model.Description</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-content mx-auto px-4 py-8">
+        @if (Model.SubCategories != null && Model.SubCategories.Any())
+        {
+            <div class="mb-8">
+                <div class="flex space-x-2">
+                    <a href="#" class="px-4 py-2 rounded-full bg-primary-blue text-white">All</a>
+                    @foreach (var subcategory in Model.SubCategories)
+                    {
+                        <a href="#@subcategory" class="px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200">@subcategory</a>
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="space-y-12">
+            @if (Model.Posts != null && Model.Posts.Any())
+            {
+                var postsByYear = Model.Posts
+                    .GroupBy(p => p.PublishDate.Year)
+                    .OrderByDescending(g => g.Key);
+
+                @foreach (var yearGroup in postsByYear)
+                {
+                    <div>
+                        <h2 class="text-2xl font-bold mb-6">@yearGroup.Key</h2>
+                        <div class="space-y-6">
+                            @foreach (var post in yearGroup.OrderByDescending(p => p.PublishDate))
+                            {
+                                <article class="group">
+                                    <a href="@(post.Slug).html" class="block">
+                                        <time class="text-gray-500">@post.PublishDate.ToString("MMMM dd, yyyy")</time>
+                                        <h3 class="text-xl font-semibold group-hover:text-primary-blue mt-1">@post.Title</h3>
+                                        @if (!string.IsNullOrEmpty(post.Description))
+                                        {
+                                            <p class="text-gray-600 mt-2">@post.Description</p>
+                                        }
+                                    </a>
+                                </article>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="text-gray-500 text-center py-12">No posts yet. Check back soon!</p>
+            }
+        </div>
+    </main>
+
+    <footer class="text-center py-8 text-gray-600">
+        <p>&copy; @DateTime.Now.Year Dane Balia. All rights reserved.</p>
+    </footer>
+</body>
+</html>

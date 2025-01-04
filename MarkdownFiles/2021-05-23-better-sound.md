@@ -1,7 +1,10 @@
 ---
 title: "Better sound - Fiio K3 and Beyerdynamic DT990"
 date: 2021-05-23 18:55:22 +0200
-category: blog 
+description: A deep dive into improving audio quality for developers
+category: tech
+subcategory: tech
+slug: better-sound
 ---
 
 ![Fiio K3](images/fiiok3.jpg)

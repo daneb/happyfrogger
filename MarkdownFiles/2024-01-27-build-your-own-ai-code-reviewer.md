@@ -1,7 +1,10 @@
 ---
 title: Build your own AI code-reviewer
 date: 2024-01-27T00:00:00-04:00
-category: blog
+category: tech
+subcategory: diy
+description: DIY on a local secure AI Code-reviewer
+slug: ai-code-reviewer
 ---
 
 ![CoPilot](images/copilot.jpg)

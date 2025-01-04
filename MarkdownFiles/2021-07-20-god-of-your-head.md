@@ -4,7 +4,6 @@ date: 2021-07-20 18:55:22 +0200
 description: The indirect creation of your own god 
 category: faith
 subcategory: devotion
-slug: god-of-your-head
 ---
 
 ![Pottery](/images/pottery.jpg)

@@ -1,7 +1,7 @@
 ---
 title: Build your own static web site generator
 date: 2024-01-14T00:00:00-04:00
-category: blog
+category: tech
 ---
 
 ![HappyFrogger](images/happyfrogger.jpg)

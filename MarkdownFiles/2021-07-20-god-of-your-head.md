@@ -1,7 +1,7 @@
 ---
 title: "God Of Your Head"
 date: 2021-07-20 18:55:22 +0200
-category: blog 
+category: faith
 ---
 
 ![Pottery](/images/pottery.jpg)

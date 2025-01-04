@@ -1,7 +1,7 @@
 ---
 title: "Building a Home Firewall"
 date: 2023-03-23 15:10:00 +0200
-category: blog
+category: tech
 ---
 
 ## The Problem 

@@ -1,7 +1,7 @@
 ---
 title: "Discouragement"
 date: 2020-12-01 12:00:00
-category: poetry
+category: creative
 ---
 
 ![Discouragement](images/discouragement.jpg)

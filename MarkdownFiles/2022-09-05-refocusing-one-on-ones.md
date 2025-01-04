@@ -1,7 +1,7 @@
 ---
 title: "Refocusing One-on-Ones"
 date: 2022-09-05 07:22:22 +0200
-category: blog 
+category: leadership
 ---
 
 ![Leadership](/images/head-shot.jpg)

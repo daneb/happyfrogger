@@ -177,6 +177,9 @@ web_modules/
 # Output of 'npm pack'
 *.tgz
 
+# Output of the Dotnet Run
+Output/*.html
+
 # Yarn Integrity file
 .yarn-integrity
 

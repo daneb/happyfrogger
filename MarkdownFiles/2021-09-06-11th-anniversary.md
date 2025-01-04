@@ -1,7 +1,7 @@
 ---
 title: "Our adventure continues"
 date: 2021-09-06 10:16:00 +0200
-category: poetry
+category: creative
 ---
 
 ![Darling](/images/darling.jpg) 

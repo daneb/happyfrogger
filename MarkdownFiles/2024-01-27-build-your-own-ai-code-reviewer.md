@@ -1,7 +1,7 @@
 ---
 title: Build your own AI code-reviewer
 date: 2024-01-27T00:00:00-04:00
-category: blog
+category: tech
 ---
 
 ![CoPilot](images/copilot.jpg)

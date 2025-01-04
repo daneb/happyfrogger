@@ -1,7 +1,7 @@
 ---
 title: "Raising Kids As A Dad"
 date: 2021-07-24 22:16:00 +0200
-category: blog 
+category: creative
 ---
 
 ![Raising Kids](/images/raisingkids.jpg)

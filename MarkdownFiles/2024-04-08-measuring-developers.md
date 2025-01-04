@@ -1,7 +1,7 @@
 ---
 title: Guideposts to Measuring Developers
 date: 2024-08-05T00:00:00-04:00
-category: blog
+category: leadership
 ---
 
 ![MeasuringDevs](images/MeasuringDevelopers.png)

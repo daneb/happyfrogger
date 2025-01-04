@@ -1,7 +1,7 @@
 ---
 title: "The Rich World Of IDEs"
 date: 2022-06-06 20:55:01 +2:00
-category: blog 
+category: tech
 ---
 
 Welcome to the Rich World of IDE's. But before we continue our journey we need to revisit the past, for only when we see the past can we truly understand our present and the beauty of tomorrow.

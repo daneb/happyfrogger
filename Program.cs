@@ -1,13 +1,14 @@
-﻿using Markdig;
-using RazorLight;
 using System.Reflection;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
-using Dumpify;
 using System.Text;
 using System.Text.RegularExpressions;
+using Dumpify;
+using HappyFrog.Models;
+using Markdig;
+using RazorLight;
+using YamlDotNet.Core;
+using YamlDotNet.Core.Events;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 class Program
 {
@@ -23,69 +24,75 @@ class Program
                         .UseMemoryCachingProvider()
                         .Build();
 
-
+        var deserializer = new DeserializerBuilder()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .IgnoreUnmatchedProperties()  // Useful if front matter has extra fields
+            .Build();
+       
         var pipeline = new MarkdownPipelineBuilder()
              .UseYamlFrontMatter()
              .UseAdvancedExtensions()
              .Build();
 
         var markdownFiles = Directory.GetFiles("MarkdownFiles", "*.md");
+        var allPosts = new List<BlogPostModel>();
 
         foreach (var file in markdownFiles)
         {
-
             try
             {
-                string fileContent = File.ReadAllText(file);
-
-                // Seperate out front matter
                 var frontMatter = ExtractFrontMatter(file);
-
                 if (!string.IsNullOrEmpty(frontMatter))
                 {
-
-                    frontMatter.Dump();
-
-                    var deserializer = new DeserializerBuilder()
-                        .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                        .Build();
-
-                    deserializer.DumpDebug();
-
                     var metadata = deserializer.Deserialize<FrontMatter>(frontMatter);
-                    metadata.Dump();
-
                     string markdown = File.ReadAllText(file).Replace(frontMatter, "").TrimStart('-', ' ', '\r', '\n');
-                    string markdownWithGist = ConvertMarkdownToHtmlWithGist(markdown);
-                    string htmlContent = Markdown.ToHtml(markdownWithGist, pipeline);
+                    string htmlContent = Markdown.ToHtml(markdown, pipeline);
 
-                    var model = new BlogPostModel
+                    var post = new BlogPostModel
                     {
-                        Title = metadata.Title, // Replace with actual data
-                        PublishDate = metadata.PublishDate, // Replace with actual data
-                        Category = metadata.Category, // Replace with actual data
-                        Content = htmlContent
+                        Title = metadata.Title,
+                        PublishDate = metadata.PublishDate,
+                        Category = metadata.Category,
+                        SubCategory = metadata.SubCategory,
+                        Content = htmlContent,
+                        Slug = metadata.Slug ?? GenerateSlug(metadata.Title),
+                        Description = metadata.Description
                     };
 
-                    string result = await engine.CompileRenderAsync("BlogTemplate.cshtml", model);
-                    string outputFilename = Path.Combine("Output", Path.GetFileNameWithoutExtension(file) + ".html");
+                    allPosts.Add(post);
+
+                    // Generate individual post page
+                    string result = await engine.CompileRenderAsync("BlogTemplate.cshtml", post);
+                    string outputFilename = Path.Combine("Output", post.Slug);
+                    if (!post.Slug.EndsWith(".html", StringComparison.OrdinalIgnoreCase))
+                    {
+                        outputFilename += ".html";
+                    }
+
                     File.WriteAllText(outputFilename, result);
-
-                    Console.WriteLine("Conversion complete.");
                 }
-                else
-                {
-                    Console.WriteLine("No front matter found.");
-                }
-
-
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Exception while processing file {file}: {e.StackTrace.Dump()}");
+                Console.WriteLine($"Error processing {file}: {e.Message}");
             }
-
         }
+
+        // Generate landing page
+        var landingModel = new LandingPageModel
+        {
+            TechPosts = allPosts.Where(p => p.Category == "tech").OrderByDescending(p => p.PublishDate),
+            FaithPosts = allPosts.Where(p => p.Category == "faith").OrderByDescending(p => p.PublishDate),
+            CreativePosts = allPosts.Where(p => p.Category == "creative").OrderByDescending(p => p.PublishDate)
+        };
+
+        string landingPage = await engine.CompileRenderAsync("LandingTemplate.cshtml", landingModel);
+        File.WriteAllText(Path.Combine("Output", "index.html"), landingPage);
+
+        // Generate category pages
+        await GenerateCategoryPage(engine, allPosts.Where(p => p.Category == "tech"), "tech", "tech.html");
+        await GenerateCategoryPage(engine, allPosts.Where(p => p.Category == "faith"), "faith", "faith.html");
+        await GenerateCategoryPage(engine, allPosts.Where(p => p.Category == "creative"), "creative", "creative.html");
 
     }
 
@@ -114,6 +121,61 @@ class Program
         }
 
         return sb.ToString().Trim();
+    }
+
+    private static string GenerateSlug(string title)
+    {
+        // Convert title to URL-friendly format
+        return title.ToLower()
+                   .Replace(" ", "-")
+                   .Replace("&", "and")
+                   .Replace("'", "")
+                   .Replace("\"", "")
+                   .Replace("?", "")
+                   .Replace("!", "")
+                   .Replace(":", "")
+                   .Replace(";", "")
+                   .Replace("/", "-") + ".html";
+    }
+    
+    private static async Task GenerateCategoryPage(
+        RazorLightEngine engine,
+        IEnumerable<BlogPostModel> posts,
+        string category,
+        string outputFile)
+    {
+        if (CategoryInfo.Categories.TryGetValue(category, out var categoryInfo))
+        {
+            var model = new CategoryPageModel
+            {
+                Category = category,
+                Title = categoryInfo.Title,
+                Description = categoryInfo.Description,
+                Posts = posts.OrderByDescending(p => p.PublishDate),
+                SubCategories = posts
+                    .Where(p => !string.IsNullOrEmpty(p.SubCategory))
+                    .Select(p => p.SubCategory)
+                    .Distinct()
+                    .OrderBy(s => s)
+            };
+
+            try
+            {
+                string result = await engine.CompileRenderAsync("CategoryTemplate.cshtml", model);
+                string outputPath = Path.Combine("Output", outputFile);
+                File.WriteAllText(outputPath, result);
+            
+                Console.WriteLine($"Generated category page: {outputFile}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error generating category page {category}: {ex.Message}");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"Warning: Category '{category}' not found in CategoryInfo.");
+        }
     }
 
 

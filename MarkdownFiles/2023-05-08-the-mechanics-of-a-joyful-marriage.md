@@ -1,7 +1,7 @@
 ---
 title: "The Less Talked about area of Success"
 date: 2023-05-08 15:10:00 +0200
-category: blog 
+category: leadership
 ---
 
 ![Marriage](/images/happymarriage.jpg)

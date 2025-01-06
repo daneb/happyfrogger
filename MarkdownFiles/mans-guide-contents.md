@@ -50,6 +50,5 @@ study_resources:
 ## 🔍 Section V: Deeper study resources
 > Additional tools for growth
 
-15. A High-Level Overview of the 66 Books
-16. Why I Believe the KJV to be Inspired Word of God
-17. How the Bible is Reliable
+15. [Notes on each Book of the Bible](notes-on-the-bible.md)  
+16. Why I use the King James Bible 

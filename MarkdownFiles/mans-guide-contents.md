@@ -50,5 +50,5 @@ study_resources:
 ## 🔍 Section V: Deeper study resources
 > Additional tools for growth
 
-15. [Notes on each Book of the Bible](notes-on-the-bible.md)  
+15. [Notes on each Book of the Bible](./bible.html)  
 16. Why I use the King James Bible 

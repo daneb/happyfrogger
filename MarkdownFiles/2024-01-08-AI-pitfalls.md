@@ -68,27 +68,27 @@ Specific questions: [what you need help with]
 For more complex problems:
 
 ```
-> Context
+1. Context
 - System: [architecture, tech stack, scale]
 - Dependencies: [versions, integrations]
 - Constraints: [performance, security, compliance]
 
-> Current State
+2. Current State
 - Existing code: [relevant snippets]
 - Current behavior: [what's happening]
 - Error messages: [if applicable]
 
-> Desired Outcome
+3. Desired Outcome
 - Expected behavior
 - Success criteria
 - Non-functional requirements
 
-> Attempted Solutions
+4. Attempted Solutions
 - Approaches tried
 - Results observed
 - Specific blockers
 
-> Specific Questions
+5. Specific Questions
 - Targeted questions about implementation
 - Areas needing clarification
 - Potential concerns

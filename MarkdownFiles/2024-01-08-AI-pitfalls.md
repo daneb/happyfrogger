@@ -67,31 +67,31 @@ Specific questions: [what you need help with]
 
 For more complex problems:
 
-```
-1. Context
-- System: [architecture, tech stack, scale]
-- Dependencies: [versions, integrations]
-- Constraints: [performance, security, compliance]
+```text
+// Context
+System: [architecture, tech stack, scale]
+Dependencies: [versions, integrations]
+Constraints: [performance, security, compliance]
 
-2. Current State
-- Existing code: [relevant snippets]
-- Current behavior: [what's happening]
-- Error messages: [if applicable]
+// Current State
+Existing code: [relevant snippets]
+Current behavior: [what's happening]
+Error messages: [if applicable]
 
-3. Desired Outcome
-- Expected behavior
-- Success criteria
-- Non-functional requirements
+// Desired Outcome
+Expected behavior
+Success criteria
+Non-functional requirements
 
-4. Attempted Solutions
-- Approaches tried
-- Results observed
-- Specific blockers
+// Attempted Solutions
+Approaches tried
+Results observed
+Specific blockers
 
-5. Specific Questions
-- Targeted questions about implementation
-- Areas needing clarification
-- Potential concerns
+// Specific Questions
+Targeted questions about implementation
+Areas needing clarification
+Potential concerns
 ```
 
 Include diagrams or flow-charts as well.

@@ -1,4 +1,10 @@
-# 🔍 4 Pitfalls in using AI to build software
+---
+title: 🔍 4 Pitfalls in using AI to build software 
+date: 2025-01-08T00:00:00-04:00
+category: tech
+subcategory: ai
+slug: four-pitfalls-ai
+---
 
 AI has evolved into a clear productivity multiplier for developers. Yet some remain skeptical, frustrated by its limitations. The issue often isn't the tool - it's misaligned expectations. Like any powerful technology, success comes from leveraging its strengths rather than fixating on what it can't do.
 

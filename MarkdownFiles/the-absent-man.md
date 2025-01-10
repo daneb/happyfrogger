@@ -38,4 +38,6 @@ As we journey together, there are three axioms from which this book finds form, 
 2. God defines the nature of the roles we should fulfill and how.
 3. Because God is not physically present, we look to His Words in scripture as His stamp of final authority to us. That is, the Bible is the final authority on all matters to do with ethics, truth, relationships, and living.
 
-> "All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness: That the man of God may be perfect, thoroughly furnished unto all good works." - 2 Timothy 3:16-17
+> All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness: That the man of God may be perfect, thoroughly furnished unto all good works. - 2 Timothy 3:16-17
+
+I became a REAL MAN because of God's Word. It shaped and moulded me, but above all it allowed me to have a relationship with THE MAN, Christ Jesus.

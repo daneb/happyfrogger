@@ -1,14 +1,15 @@
 ---
-title: "The Man's Guide to Biblical Truth"
+title: "Table of Contents"
 date: 2025-01-04
 category: faith
 subcategory: book
 chapter_number: 0
 progress: 1
-description: "Book structure and content"
+status: draft  # or "published"
+description: "Key topics to be covered"
 slug: mans-guide-chapter-0
 previous_chapter: introduction
-next_chapter: foundations-chapter-1
+next_chapter: the-absent-man
 study_resources:
   - title: "Hebrew Word Study: אוֹר (Light)"
     description: "Understanding the deep meaning of 'light' in biblical Hebrew"
@@ -20,7 +21,7 @@ study_resources:
 ## 📚 Section I: Understanding the Foundation
 > Getting oriented with God's Word
 
-1. The Foundations
+1. The Absent man
 2. Overview of the Bible
 3. Dispensations
 4. God's Plan through the Bible

@@ -56,6 +56,10 @@
         </div>
         <div class="flex justify-center items-center">
             <h1 class="text-3xl font-bold">@Model.Title</h1>
+            @if (Model.Status?.ToLower() == "draft")
+            {
+             <span class="ml-4 inline-block px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium border border-orange-200">Draft</span>
+            }
         </div>
         @if (!string.IsNullOrEmpty(Model.SubCategory))
         {

@@ -57,7 +57,8 @@ class Program
                         SubCategory = metadata.SubCategory,
                         Content = htmlContent,
                         Slug = metadata.Slug ?? GenerateSlug(metadata.Title),
-                        Description = metadata.Description
+                        Description = metadata.Description,
+                        Status = metadata.Status
                     };
 
                     allPosts.Add(post);

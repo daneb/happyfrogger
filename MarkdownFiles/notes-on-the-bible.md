@@ -5,6 +5,7 @@ category: faith
 subcategory: book
 chapter_number: 15
 progress: 1
+status: draft  # or "published"
 description: "Overview of each book of the Bible"
 slug: bible
 previous_chapter: jesus-in-the-bible

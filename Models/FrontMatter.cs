@@ -21,4 +21,7 @@ public class FrontMatter
 
     [YamlMember(Alias = "slug")]
     public string Slug { get; set; }
+    
+    [YamlMember(Alias = "status")]
+    public string Status { get; set; } = "published"; // Default to published if not specified
 }

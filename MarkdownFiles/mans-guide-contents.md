@@ -21,7 +21,7 @@ study_resources:
 ## 📚 Section I: Understanding the Foundation
 > Getting oriented with God's Word
 
-1. The Absent man
+1. [The Absent man](./the-absent-man.html)
 2. Overview of the Bible
 3. Dispensations
 4. God's Plan through the Bible

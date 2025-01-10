@@ -18,9 +18,7 @@ study_resources:
   author: "FB Meyer"
   description: "The commentary provides a structured arrangement of biblical texts with concise devotional insights, designed to facilitate daily reading and reflection. It covers key passages suitable for individual or family study."
 ---
-# The Absent Man
-
-> "Watch ye, stand fast in the faith, quit you like men, be strong." - 1 Corinthians 16:13
+> Watch ye, stand fast in the faith, quit you like men, be strong. - 1 Corinthians 16:13
 
 Growing up as a young boy in KwaZulu Natal, I remember my mother doing her very best to care for me. My fondest memories of her are her smile upon my face, her cooking what still stands today as some of my favorite foods, but more so her instilling in me a love for God. Life was challenging, perhaps no more so than it is for our kids in this harsh world. I remember my mother, a single parent, and when I looked at her I recall her being lonely. She was always in what felt like the pursuit of a man, a man who could perhaps be a husband for her, and a real dad to me. My father, whom I don't really know, apparently left before I was born. He had met my mother during conscription, resulting in my birth. I don't really know all the details of him, his past, and my knowledge of him is more myth and lore than anything else and probably fits on the tip of a toothpick.
 

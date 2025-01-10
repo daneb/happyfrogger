@@ -1,5 +1,5 @@
 ---
-title: Notes on each Book of the Bible
+title: Survey of the Bible
 date: 2025-01-04
 category: faith
 subcategory: book

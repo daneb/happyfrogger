@@ -5,7 +5,7 @@ category: faith
 subcategory: book
 chapter_number: 1
 progress: 1
-status: published  # or "published"
+status: draft  # or "published"
 description: "Why good men matter"
 slug: the-absent-man
 previous_chapter: mans-guide-contents
@@ -28,7 +28,7 @@ Our home was a broken home. I hardly felt like my mother spent time with me, but
 
 Perhaps it may be said, what kind of woman was this, what kind of mother? For some part of my early life when I left my guardians' home, I thought less of her. But as I now gaze at my three kids, and as I rise onto my own feet in their warm embrace, I see clearly, far more than ever, the realities, the root cause of it all: a failing FATHER and a failed MAN.
 
-There are three phases of my life where FATHER matters. The first was when I was growing up with my mother. The second when I was staying with my guardians. And the third, as I raise my three kids. How different our lives would have been if in my home, a man was present, a husband was there when the wife was not, a father was there when the mother was not. There were so many tools I lacked in my youth that others had. There was so much effort I had to put into building myself into what a real man should be. But of it all, whether in my early life with my mother, or in the latter part of my youth, the description, the qualities, the attributes of what a real man was were absent.
+There are three phases of my life where FATHER matters. The first was when I was growing up with my mother. The second when I was staying with my guardians. And the third, as I raise my three kids. How different our lives would have been if in my home, a man was present, a husband was there when the wife was not, a father was there when the mother was not. There were so many tools I lacked in my youth that others had. There was so much effort I had to put into building myself into what a real man should be. But of it all, whether in my early life with my mother, or in the latter part of my youth, the description, the qualities, the attributes of what a real man was, were absent.
 
 I look out at the world today, and that picture of what a MAN is feels even further corrupted. We have gender ideologues that have crept in, swaying, self-chosen genders. We have a strong feminist movement that sees women as greater than men, and to some not even needing them. Men and women are certainly equal, before God and before men, but they are different. I want to focus our time in this book on the identity, character, and nature of a real man. By real man, I mean a man who fulfills the role that God has purposed for Him. A man who is strong. A man who fights for what is right. A man who is moral. A man who clings to the word of God. A man who clings to his wife and lays down his life for her. A man who leads his family well. A man who dedicates his time to his kids. But above all, a man who is obedient unto the Lord God, not because God demands, but because God loved him first.
 

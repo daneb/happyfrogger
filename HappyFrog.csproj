@@ -22,6 +22,9 @@
         <None Update="MarkdownFiles\2021-05-23-better-sound.md">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Update="MarkdownFiles\dispensations.md">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 

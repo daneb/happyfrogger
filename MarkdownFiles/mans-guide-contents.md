@@ -23,7 +23,7 @@ study_resources:
 
 1. [The Absent man](./the-absent-man.html)
 2. [Unlocking your Bible Understanding](./dispensations.html)
-3. God's Plan through the Bible
+3. [God's Programme](./gods-programme.html)
 
 ## ⚡ Section II: The Journey of Salvation
 > The core of Christian faith and life
@@ -33,22 +33,31 @@ study_resources:
 6. The Cross of Salvation
 
 ## 🛡️ Section III: The Challenges after Salvation
-> Challenges of the believer
+> The struggles of this life 
 
 7. Overcoming Sin
 8. Losing Salvation
 9. Rejecting Calvinism
 
-## 👥 Section IV: Biblical Manhood through Examples
-> Learning from key biblical figures
+## 🤺 Section IV: The Courage of Sanctification
+> The opportunities within this life
 
-10. Joshua in the Bible
-11. Jonah in the Bible
-12. Joseph in the Bible
-13. Jesus in the Bible
+10. Preparing to Evangelize
+11. Preparing to Preach
+12. Preparing to Teach
+13. Preparing for Marriage
+
+## 👥 Section V: Biblical Manhood through Examples
+> Lessons from the lives of others
+
+10. Satan in the Bible
+11. Joshua in the Bible
+12. Jonah in the Bible
+13. Joseph in the Bible
+14. Jesus in the Bible
 
 ## 🔍 Section V: Deeper study resources
-> Additional tools for growth
+> Additional tools for life
 
-14. [Notes on each Book of the Bible](./bible.html)
-15. Why I use the King James Bible 
+15. [Notes on each Book of the Bible](./bible.html)
+16. Why I use the King James Bible 

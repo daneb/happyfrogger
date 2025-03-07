@@ -125,6 +125,7 @@ dotnet run
 ```
 
 2. The static site will be generated in the `Output/` directory
+3. Copy all files in `Output/` to the GitHub Pages repository or your web host
 3. Deploy the contents of `Output/` to your web host
 
 ## Contributing

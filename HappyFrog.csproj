@@ -6,9 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PreserveCompilationContext>true</PreserveCompilationContext>
-    <Version>2.0.0</Version>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
+    <Version>2.5.0</Version>
+    <AssemblyVersion>2.5.0.0</AssemblyVersion>
+    <FileVersion>2.5.0.0</FileVersion>
     <Product>HappyFrogger</Product>
     <Description>A lightweight static site generator built with C# and Razor</Description>
     <Authors>Dane Balia</Authors>

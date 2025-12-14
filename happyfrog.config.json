@@ -1,6 +1,6 @@
 {
   "markdownFilesPath": "../blog/markdownfiles",
-  "outputPath": "../blog/public",
+  "outputPath": "../blog/",
   "templatesPath": "Templates",
   "site": {
     "title": "HappyFrogger Blog",
@@ -17,6 +17,22 @@
       "tech",
       "faith",
       "creative"
-    ]
+    ],
+    "rss": {
+      "enabled": true,
+      "path": "feed.xml",
+      "itemCount": 20,
+      "fullContent": true
+    },
+    "sitemap": {
+      "enabled": true,
+      "path": "sitemap.xml"
+    },
+    "toc": {
+      "enabledByDefault": true,
+      "minHeadings": 3,
+      "maxLevel": 3,
+      "title": "Table of Contents"
+    }
   }
 }

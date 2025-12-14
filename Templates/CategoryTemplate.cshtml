@@ -5,7 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@Model.Title - Dane Balia</title>
+    <meta name="description" content="@Model.Description">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@Model.Title">
+    <meta property="og:description" content="@Model.Description">
+    <meta property="og:url" content="https://danebalia.com/@(Model.Category).html">
+    <meta property="og:site_name" content="Dane Balia">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="@Model.Title">
+    <meta name="twitter:description" content="@Model.Description">
+
     <link rel="stylesheet" href="output.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="feed.xml">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TT319LL0P6"></script>
     <script>
@@ -125,7 +140,11 @@
                     {
                     <article class="group">
                         <a href="@(post.Slug).html" class="block">
-                            <time class="text-gray-500">@post.PublishDate.ToString("MMMM dd, yyyy")</time>
+                            <div class="flex items-center gap-2 text-gray-500 text-sm">
+                                <time>@post.PublishDate.ToString("MMMM dd, yyyy")</time>
+                                <span>•</span>
+                                <span>@post.ReadingTimeMinutes min read</span>
+                            </div>
                             <h3 class="text-xl font-semibold group-hover:text-primary-blue mt-1">@post.Title</h3>
                             @if (!string.IsNullOrEmpty(post.Description))
                             {

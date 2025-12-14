@@ -4,7 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@Model.Title</title>
+    <meta name="description" content="@Model.Description">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="@Model.Title">
+    <meta property="og:description" content="@Model.Description">
+    <meta property="og:url" content="https://danebalia.com/@Model.Slug">
+    @if (!string.IsNullOrEmpty(Model.SocialImage))
+    {
+        <meta property="og:image" content="@Model.SocialImage">
+    }
+    <meta property="og:site_name" content="Dane Balia">
+    <meta property="article:published_time" content="@Model.PublishDate.ToString("yyyy-MM-ddTHH:mm:ssZ")">
+    <meta property="article:author" content="Dane Balia">
+    <meta property="article:section" content="@Model.Category">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@Model.Title">
+    <meta name="twitter:description" content="@Model.Description">
+    @if (!string.IsNullOrEmpty(Model.SocialImage))
+    {
+        <meta name="twitter:image" content="@Model.SocialImage">
+    }
+
     <link rel="stylesheet" href="output.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="feed.xml">
     <style>
         /* You can add custom styles here if needed */
         .prose p {
@@ -28,6 +54,49 @@
         .gist .gist-file {
             max-width: 100%;
             overflow: auto;
+        }
+
+        /* Table of Contents styling */
+        .toc {
+            background: #f8f9fa;
+            border-left: 4px solid #3b82f6;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
+        }
+
+        .toc-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin: 0 0 1rem 0;
+            color: #1f2937;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc-list li {
+            margin: 0.5rem 0;
+        }
+
+        .toc-list ul {
+            list-style: none;
+            padding-left: 1.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .toc-list a {
+            color: #3b82f6;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: #2563eb;
+            text-decoration: underline;
         }
     </style>
     <!-- Google tag (gtag.js) -->
@@ -67,10 +136,19 @@
             Category: @Model.SubCategory
         </div>
         }
+        <div class="mt-4 text-gray-500 text-sm flex items-center justify-center gap-4">
+            <span>@Model.PublishDate.ToString("MMMM dd, yyyy")</span>
+            <span>•</span>
+            <span>@Model.ReadingTimeMinutes min read</span>
+        </div>
     </div>
 </header>
 <main class="max-w-4xl mx-auto px-4 py-8">
     <article>
+        @if (!string.IsNullOrEmpty(Model.TableOfContents))
+        {
+            @Raw(Model.TableOfContents)
+        }
         <div class="prose prose-blue max-w-none">
             @Raw(Model.Content)
         </div>

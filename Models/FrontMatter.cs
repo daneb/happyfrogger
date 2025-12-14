@@ -21,7 +21,13 @@ public class FrontMatter
 
     [YamlMember(Alias = "slug")]
     public string Slug { get; set; }
-    
+
     [YamlMember(Alias = "status")]
     public string Status { get; set; } = "published"; // Default to published if not specified
+
+    [YamlMember(Alias = "socialImage")]
+    public string SocialImage { get; set; } // Optional per-post social media image
+
+    [YamlMember(Alias = "toc")]
+    public bool? Toc { get; set; } // Optional per-post TOC override (null = use default)
 }

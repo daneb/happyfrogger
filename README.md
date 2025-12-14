@@ -17,6 +17,7 @@ A lightweight static site generator built with C# and Razor, designed for develo
 - ⚙️ Flexible JSON configuration system
 - 📁 Configurable input/output directories
 - 📝 Draft post support
+- 📡 RSS 2.0 feed generation with configurable options
 
 ## Prerequisites
 
@@ -128,7 +129,13 @@ HappyFrogger uses a `happyfrog.config.json` file for flexible configuration. Thi
     "generateLandingPage": true,
     "htmlExtension": ".html",
     "includeDrafts": false,
-    "categories": ["tech", "faith", "creative"]
+    "categories": ["tech", "faith", "creative"],
+    "rss": {
+      "enabled": true,
+      "path": "feed.xml",
+      "itemCount": 20,
+      "fullContent": true
+    }
   }
 }
 ```
@@ -152,6 +159,11 @@ HappyFrogger uses a `happyfrog.config.json` file for flexible configuration. Thi
 - **htmlExtension**: File extension for generated HTML files (default: `".html"`)
 - **includeDrafts**: Include posts with `status: draft` in builds (default: `false`)
 - **categories**: Array of categories to generate pages for (default: `["tech", "faith", "creative"]`)
+- **rss**: RSS feed configuration options
+  - **enabled**: Enable/disable RSS feed generation (default: `true`)
+  - **path**: Output path for RSS feed file (default: `"feed.xml"`)
+  - **itemCount**: Maximum number of posts in feed, 0 for all (default: `20`)
+  - **fullContent**: Include full HTML content or just description (default: `true`)
 
 ### Path Validation
 

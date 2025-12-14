@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using Dumpify;
 using HappyFrog.Models;
 using Markdig;
+using Markdig.Extensions.AutoIdentifiers;
 using RazorLight;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
@@ -102,6 +103,7 @@ class Program
         var pipeline = new MarkdownPipelineBuilder()
              .UseYamlFrontMatter()
              .UseAdvancedExtensions()
+             .UseAutoIdentifiers(AutoIdentifierOptions.GitHub) // Explicitly enable auto IDs for headings
              .Build();
 
         var markdownFiles = Directory.GetFiles(config.MarkdownFilesPath, "*.md");
@@ -116,8 +118,18 @@ class Program
                 {
                     var metadata = deserializer.Deserialize<FrontMatter>(frontMatter);
                     string markdown = File.ReadAllText(file).Replace(frontMatter, "").TrimStart('-', ' ', '\r', '\n');
-                    string markdownWithGist = ConvertMarkdownToHtmlWithGist(markdown);
-                    string htmlContent = Markdown.ToHtml(markdownWithGist, pipeline);
+
+                    // Replace Gist placeholders in markdown before conversion
+                    markdown = ReplaceGistPlaceholders(markdown);
+
+                    // Convert markdown to HTML with the pipeline (includes AutoIdentifiers)
+                    string htmlContent = Markdown.ToHtml(markdown, pipeline);
+
+                    // Determine if TOC should be generated for this post
+                    bool shouldGenerateToc = metadata.Toc ?? config.Build.Toc.EnabledByDefault;
+                    string tableOfContents = shouldGenerateToc
+                        ? GenerateTableOfContents(htmlContent, config.Build.Toc)
+                        : string.Empty;
 
                     var post = new BlogPostModel
                     {
@@ -128,7 +140,10 @@ class Program
                         Content = htmlContent,
                         Slug = metadata.Slug ?? GenerateSlug(metadata.Title),
                         Description = metadata.Description,
-                        Status = metadata.Status
+                        Status = metadata.Status,
+                        ReadingTimeMinutes = CalculateReadingTime(htmlContent, config.Build.WordsPerMinute),
+                        SocialImage = metadata.SocialImage,
+                        TableOfContents = tableOfContents
                     };
 
                     // Skip drafts if not configured to include them
@@ -181,6 +196,48 @@ class Program
             }
         }
 
+        // Generate RSS feed
+        if (config.Build.Rss.Enabled)
+        {
+            try
+            {
+                var feedGenerator = new HappyFrog.RssFeedGenerator(config);
+                var feedXml = feedGenerator.Generate(allPosts);
+                var feedPath = Path.Combine(config.OutputPath, config.Build.Rss.Path);
+                File.WriteAllText(feedPath, feedXml);
+                Console.WriteLine($"Generated RSS feed: {config.Build.Rss.Path}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Warning: Failed to generate RSS feed: {ex.Message}");
+            }
+        }
+
+        // Generate Sitemap
+        if (config.Build.Sitemap.Enabled)
+        {
+            try
+            {
+                var sitemapGenerator = new HappyFrog.SitemapGenerator(config);
+
+                // Generate sitemap.xml
+                var sitemapXml = sitemapGenerator.Generate(allPosts);
+                var sitemapPath = Path.Combine(config.OutputPath, config.Build.Sitemap.Path);
+                File.WriteAllText(sitemapPath, sitemapXml);
+                Console.WriteLine($"Generated sitemap: {config.Build.Sitemap.Path}");
+
+                // Generate robots.txt
+                var robotsTxt = sitemapGenerator.GenerateRobotsTxt();
+                var robotsPath = Path.Combine(config.OutputPath, "robots.txt");
+                File.WriteAllText(robotsPath, robotsTxt);
+                Console.WriteLine($"Generated robots.txt");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Warning: Failed to generate sitemap: {ex.Message}");
+            }
+        }
+
         // Build summary
         Console.WriteLine("\n═══════════════════════════════════════════════");
         Console.WriteLine("   Build Complete! 🎉");
@@ -188,6 +245,8 @@ class Program
         Console.WriteLine($"  • Posts Generated: {allPosts.Count}");
         Console.WriteLine($"  • Landing Page: {(config.Build.GenerateLandingPage ? "✓" : "✗")}");
         Console.WriteLine($"  • Category Pages: {(config.Build.GenerateCategoryPages ? config.Build.Categories.Count : 0)}");
+        Console.WriteLine($"  • RSS Feed: {(config.Build.Rss.Enabled ? "✓" : "✗")}");
+        Console.WriteLine($"  • Sitemap: {(config.Build.Sitemap.Enabled ? "✓" : "✗")}");
         Console.WriteLine($"  • Output Location: {Path.GetFullPath(config.OutputPath)}");
         Console.WriteLine("═══════════════════════════════════════════════\n");
     }
@@ -277,6 +336,24 @@ class Program
                    .Replace(";", "")
                    .Replace("/", "-") + ".html";
     }
+
+    private static int CalculateReadingTime(string htmlContent, int wordsPerMinute)
+    {
+        // Strip HTML tags to get plain text
+        var plainText = Regex.Replace(htmlContent, @"<[^>]+>", " ");
+
+        // Normalize whitespace
+        plainText = Regex.Replace(plainText, @"\s+", " ").Trim();
+
+        // Count words
+        var wordCount = plainText.Split(new[] { ' ', '\t', '\n', '\r' },
+            StringSplitOptions.RemoveEmptyEntries).Length;
+
+        // Calculate reading time in minutes (round up, minimum 1 minute)
+        var minutes = (int)Math.Ceiling((double)wordCount / wordsPerMinute);
+
+        return Math.Max(1, minutes); // Ensure at least 1 minute
+    }
     
     private static async Task GenerateCategoryPage(
         RazorLightEngine engine,
@@ -319,18 +396,85 @@ class Program
         }
     }
 
-    private static string ConvertMarkdownToHtmlWithGist(string markdownContent)
+    private static string ReplaceGistPlaceholders(string markdownContent)
     {
-        // Replace Gist placeholders
-        var replacedMarkdown = Regex.Replace(markdownContent, @"\[gist:(.*?)\]", m =>
+        // Replace Gist placeholders with script tags
+        return Regex.Replace(markdownContent, @"\[gist:(.*?)\]", m =>
         {
             string gistId = m.Groups[1].Value;
             return $"<script src=\"https://gist.github.com/{gistId}.js\"></script>";
         });
-
-        // Convert to HTML
-        return Markdown.ToHtml(replacedMarkdown);
     }
-   
+
+    private static string GenerateTableOfContents(string htmlContent, TocOptions options)
+    {
+        // Parse headings from HTML content
+        var headingPattern = @"<h([2-6])[^>]*id=""([^""]*)""[^>]*>(.*?)</h\1>";
+        var matches = Regex.Matches(htmlContent, headingPattern, RegexOptions.IgnoreCase);
+
+        if (matches.Count < options.MinHeadings)
+        {
+            return string.Empty; // Not enough headings to generate TOC
+        }
+
+        var tocBuilder = new StringBuilder();
+        tocBuilder.AppendLine($"<nav class=\"toc\" role=\"navigation\">");
+        tocBuilder.AppendLine($"  <h2 class=\"toc-title\">{options.Title}</h2>");
+        tocBuilder.AppendLine("  <ul class=\"toc-list\">");
+
+        int lastLevel = 2;
+
+        foreach (Match match in matches)
+        {
+            int level = int.Parse(match.Groups[1].Value);
+
+            // Skip headings beyond max level
+            if (level > options.MaxLevel)
+            {
+                continue;
+            }
+
+            string id = match.Groups[2].Value;
+            string text = Regex.Replace(match.Groups[3].Value, @"<[^>]+>", ""); // Strip any HTML tags from heading text
+
+            // Handle nesting
+            if (level > lastLevel)
+            {
+                for (int i = lastLevel; i < level; i++)
+                {
+                    tocBuilder.AppendLine($"{new string(' ', (i - 1) * 2)}  <ul>");
+                }
+            }
+            else if (level < lastLevel)
+            {
+                for (int i = level; i < lastLevel; i++)
+                {
+                    tocBuilder.AppendLine($"{new string(' ', (i - 1) * 2)}  </ul>");
+                    tocBuilder.AppendLine($"{new string(' ', (i - 1) * 2)}  </li>");
+                }
+            }
+            else if (lastLevel > 2 || tocBuilder.ToString().Contains("<li>"))
+            {
+                tocBuilder.AppendLine($"{new string(' ', (level - 2) * 2)}    </li>");
+            }
+
+            tocBuilder.AppendLine($"{new string(' ', (level - 2) * 2)}    <li><a href=\"#{id}\">{text}</a>");
+            lastLevel = level;
+        }
+
+        // Close any remaining open lists
+        for (int i = 2; i < lastLevel; i++)
+        {
+            tocBuilder.AppendLine($"{new string(' ', (i - 2) * 2)}  </ul>");
+            tocBuilder.AppendLine($"{new string(' ', (i - 2) * 2)}  </li>");
+        }
+
+        tocBuilder.AppendLine("    </li>");
+        tocBuilder.AppendLine("  </ul>");
+        tocBuilder.AppendLine("</nav>");
+
+        return tocBuilder.ToString();
+    }
+
 
 }

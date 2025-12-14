@@ -1,0 +1,22 @@
+{
+  "markdownFilesPath": "../blog/markdownfiles",
+  "outputPath": "../blog/public",
+  "templatesPath": "Templates",
+  "site": {
+    "title": "HappyFrogger Blog",
+    "description": "A lightweight static site generator",
+    "author": "Dane Balia",
+    "baseUrl": "https://danebalia.com"
+  },
+  "build": {
+    "generateCategoryPages": true,
+    "generateLandingPage": true,
+    "htmlExtension": ".html",
+    "includeDrafts": false,
+    "categories": [
+      "tech",
+      "faith",
+      "creative"
+    ]
+  }
+}

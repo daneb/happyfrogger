@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Dumpify;
 using HappyFrog.Models;
@@ -14,10 +15,79 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        string basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        string templatesPath = Path.Combine(basePath, "Templates");
+        Console.WriteLine("═══════════════════════════════════════════════");
+        Console.WriteLine("   HappyFrogger - Static Site Generator 🐸");
+        Console.WriteLine("═══════════════════════════════════════════════\n");
 
-        Console.WriteLine(templatesPath);
+        // Load configuration
+        var config = LoadConfiguration();
+
+        string basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        string templatesPath = Path.Combine(basePath, config.TemplatesPath);
+
+        // Validate and display paths
+        Console.WriteLine("Configuration Check:");
+        Console.WriteLine("─────────────────────────────────────────────");
+
+        bool allPathsValid = true;
+
+        // Check Templates Path
+        if (Directory.Exists(templatesPath))
+        {
+            Console.WriteLine($"✓ Templates Path: {templatesPath}");
+        }
+        else
+        {
+            Console.WriteLine($"✗ Templates Path: {templatesPath} [NOT FOUND]");
+            allPathsValid = false;
+        }
+
+        // Check Markdown Files Path
+        if (Directory.Exists(config.MarkdownFilesPath))
+        {
+            var fileCount = Directory.GetFiles(config.MarkdownFilesPath, "*.md").Length;
+            Console.WriteLine($"✓ Markdown Files Path: {config.MarkdownFilesPath} ({fileCount} files)");
+        }
+        else
+        {
+            Console.WriteLine($"✗ Markdown Files Path: {config.MarkdownFilesPath} [NOT FOUND]");
+            allPathsValid = false;
+        }
+
+        // Check/Create Output Path
+        if (!Directory.Exists(config.OutputPath))
+        {
+            try
+            {
+                Directory.CreateDirectory(config.OutputPath);
+                Console.WriteLine($"✓ Output Path: {config.OutputPath} [CREATED]");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"✗ Output Path: {config.OutputPath} [CANNOT CREATE: {ex.Message}]");
+                allPathsValid = false;
+            }
+        }
+        else
+        {
+            Console.WriteLine($"✓ Output Path: {config.OutputPath}");
+        }
+
+        Console.WriteLine("─────────────────────────────────────────────\n");
+
+        if (!allPathsValid)
+        {
+            Console.WriteLine("❌ Error: Some required paths are missing or invalid.");
+            Console.WriteLine("Please check your configuration in happyfrog.config.json\n");
+            return;
+        }
+
+        Console.WriteLine("Build Settings:");
+        Console.WriteLine($"  • Generate Landing Page: {config.Build.GenerateLandingPage}");
+        Console.WriteLine($"  • Generate Category Pages: {config.Build.GenerateCategoryPages}");
+        Console.WriteLine($"  • Include Drafts: {config.Build.IncludeDrafts}");
+        Console.WriteLine($"  • Categories: {string.Join(", ", config.Build.Categories)}");
+        Console.WriteLine();
 
         var engine = new RazorLightEngineBuilder()
                         .UseFileSystemProject(templatesPath)
@@ -34,7 +104,7 @@ class Program
              .UseAdvancedExtensions()
              .Build();
 
-        var markdownFiles = Directory.GetFiles("MarkdownFiles", "*.md");
+        var markdownFiles = Directory.GetFiles(config.MarkdownFilesPath, "*.md");
         var allPosts = new List<BlogPostModel>();
 
         foreach (var file in markdownFiles)
@@ -61,14 +131,21 @@ class Program
                         Status = metadata.Status
                     };
 
+                    // Skip drafts if not configured to include them
+                    if (post.Status != "published" && !config.Build.IncludeDrafts)
+                    {
+                        Console.WriteLine($"Skipping draft: {post.Title}");
+                        continue;
+                    }
+
                     allPosts.Add(post);
 
                     // Generate individual post page
                     string result = await engine.CompileRenderAsync("BlogTemplate.cshtml", post);
-                    string outputFilename = Path.Combine("Output", post.Slug);
-                    if (!post.Slug.EndsWith(".html", StringComparison.OrdinalIgnoreCase))
+                    string outputFilename = Path.Combine(config.OutputPath, post.Slug);
+                    if (!post.Slug.EndsWith(config.Build.HtmlExtension, StringComparison.OrdinalIgnoreCase))
                     {
-                        outputFilename += ".html";
+                        outputFilename += config.Build.HtmlExtension;
                     }
 
                     File.WriteAllText(outputFilename, result);
@@ -81,21 +158,82 @@ class Program
         }
 
         // Generate landing page
-        var landingModel = new LandingPageModel
+        if (config.Build.GenerateLandingPage)
         {
-            TechPosts = allPosts.Where(p => p.Category == "tech").OrderByDescending(p => p.PublishDate),
-            FaithPosts = allPosts.Where(p => p.Category == "faith").OrderByDescending(p => p.PublishDate),
-            CreativePosts = allPosts.Where(p => p.Category == "creative").OrderByDescending(p => p.PublishDate)
-        };
+            var landingModel = new LandingPageModel
+            {
+                TechPosts = allPosts.Where(p => p.Category == "tech").OrderByDescending(p => p.PublishDate),
+                FaithPosts = allPosts.Where(p => p.Category == "faith").OrderByDescending(p => p.PublishDate),
+                CreativePosts = allPosts.Where(p => p.Category == "creative").OrderByDescending(p => p.PublishDate)
+            };
 
-        string landingPage = await engine.CompileRenderAsync("LandingTemplate.cshtml", landingModel);
-        File.WriteAllText(Path.Combine("Output", "index.html"), landingPage);
+            string landingPage = await engine.CompileRenderAsync("LandingTemplate.cshtml", landingModel);
+            File.WriteAllText(Path.Combine(config.OutputPath, "index.html"), landingPage);
+        }
 
         // Generate category pages
-        await GenerateCategoryPage(engine, allPosts.Where(p => p.Category == "tech"), "tech", "tech.html");
-        await GenerateCategoryPage(engine, allPosts.Where(p => p.Category == "faith"), "faith", "faith.html");
-        await GenerateCategoryPage(engine, allPosts.Where(p => p.Category == "creative"), "creative", "creative.html");
+        if (config.Build.GenerateCategoryPages)
+        {
+            foreach (var category in config.Build.Categories)
+            {
+                var categoryPosts = allPosts.Where(p => p.Category == category);
+                await GenerateCategoryPage(engine, categoryPosts, category, $"{category}{config.Build.HtmlExtension}", config.OutputPath);
+            }
+        }
 
+        // Build summary
+        Console.WriteLine("\n═══════════════════════════════════════════════");
+        Console.WriteLine("   Build Complete! 🎉");
+        Console.WriteLine("═══════════════════════════════════════════════");
+        Console.WriteLine($"  • Posts Generated: {allPosts.Count}");
+        Console.WriteLine($"  • Landing Page: {(config.Build.GenerateLandingPage ? "✓" : "✗")}");
+        Console.WriteLine($"  • Category Pages: {(config.Build.GenerateCategoryPages ? config.Build.Categories.Count : 0)}");
+        Console.WriteLine($"  • Output Location: {Path.GetFullPath(config.OutputPath)}");
+        Console.WriteLine("═══════════════════════════════════════════════\n");
+    }
+
+    private static HappyFrogConfig LoadConfiguration()
+    {
+        const string configFileName = "happyfrog.config.json";
+
+        // Try to load from current directory first
+        string configPath = configFileName;
+
+        // If not found, try the executable directory
+        if (!File.Exists(configPath))
+        {
+            string basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            configPath = Path.Combine(basePath, configFileName);
+        }
+
+        if (File.Exists(configPath))
+        {
+            try
+            {
+                string jsonContent = File.ReadAllText(configPath);
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                    ReadCommentHandling = JsonCommentHandling.Skip,
+                    AllowTrailingCommas = true
+                };
+
+                var config = JsonSerializer.Deserialize<HappyFrogConfig>(jsonContent, options);
+                Console.WriteLine($"Configuration loaded from: {configPath}");
+                return config ?? new HappyFrogConfig();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Warning: Error loading configuration from {configPath}: {ex.Message}");
+                Console.WriteLine("Using default configuration.");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"Configuration file not found at {configPath}. Using default configuration.");
+        }
+
+        return new HappyFrogConfig();
     }
 
     private static string ExtractFrontMatter(string filePath)
@@ -144,7 +282,8 @@ class Program
         RazorLightEngine engine,
         IEnumerable<BlogPostModel> posts,
         string category,
-        string outputFile)
+        string outputFile,
+        string outputPath)
     {
         if (CategoryInfo.Categories.TryGetValue(category, out var categoryInfo))
         {
@@ -164,9 +303,9 @@ class Program
             try
             {
                 string result = await engine.CompileRenderAsync("CategoryTemplate.cshtml", model);
-                string outputPath = Path.Combine("Output", outputFile);
-                File.WriteAllText(outputPath, result);
-            
+                string fullOutputPath = Path.Combine(outputPath, outputFile);
+                File.WriteAllText(fullOutputPath, result);
+
                 Console.WriteLine($"Generated category page: {outputFile}");
             }
             catch (Exception ex)

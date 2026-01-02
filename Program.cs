@@ -96,7 +96,6 @@ class Program
                         .Build();
 
         var deserializer = new DeserializerBuilder()
-            .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .IgnoreUnmatchedProperties()  // Useful if front matter has extra fields
             .Build();
        
@@ -143,7 +142,13 @@ class Program
                         Status = metadata.Status,
                         ReadingTimeMinutes = CalculateReadingTime(htmlContent, config.Build.WordsPerMinute),
                         SocialImage = metadata.SocialImage,
-                        TableOfContents = tableOfContents
+                        TableOfContents = tableOfContents,
+                        // Book-specific properties
+                        ChapterNumber = metadata.ChapterNumber,
+                        Progress = metadata.Progress,
+                        PreviousChapter = metadata.PreviousChapter,
+                        NextChapter = metadata.NextChapter,
+                        StudyResources = metadata.StudyResources
                     };
 
                     // Skip drafts if not configured to include them

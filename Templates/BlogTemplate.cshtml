@@ -153,6 +153,77 @@
             @Raw(Model.Content)
         </div>
     </article>
+
+    @* Chapter Navigation for Book Posts *@
+    @if (Model.SubCategory == "book" && (!string.IsNullOrEmpty(Model.PreviousChapter) || !string.IsNullOrEmpty(Model.NextChapter)))
+    {
+    <div class="mt-12 pt-8 border-t border-gray-200">
+        <nav class="flex justify-between items-center">
+            @if (!string.IsNullOrEmpty(Model.PreviousChapter))
+            {
+            <a href="@Model.PreviousChapter" class="flex items-center text-gray-600 hover:text-primary-blue group">
+                <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                <div class="text-left">
+                    <div class="text-sm text-gray-500">Previous Chapter</div>
+                    <div class="font-medium group-hover:text-primary-blue">← Previous</div>
+                </div>
+            </a>
+            }
+            else
+            {
+            <div></div>
+            }
+
+            <a href="faith.html" class="text-gray-600 hover:text-primary-blue text-sm">
+                <svg class="w-5 h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                All Chapters
+            </a>
+
+            @if (!string.IsNullOrEmpty(Model.NextChapter))
+            {
+            <a href="@Model.NextChapter" class="flex items-center text-gray-600 hover:text-primary-blue group">
+                <div class="text-right">
+                    <div class="text-sm text-gray-500">Next Chapter</div>
+                    <div class="font-medium group-hover:text-primary-blue">Next →</div>
+                </div>
+                <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </a>
+            }
+            else
+            {
+            <div></div>
+            }
+        </nav>
+    </div>
+    }
+
+    @* Study Resources Section *@
+    @if (Model.StudyResources != null && Model.StudyResources.Any())
+    {
+    <div class="mt-8 p-6 bg-blue-50 rounded-lg border border-blue-100">
+        <h3 class="text-lg font-semibold mb-4 flex items-center">
+            <svg class="w-5 h-5 mr-2 text-primary-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            Additional Study Resources
+        </h3>
+        <div class="space-y-3">
+            @foreach (var resource in Model.StudyResources)
+            {
+            <div class="bg-white p-4 rounded border border-blue-200">
+                <h4 class="font-medium text-gray-900">@resource.Title</h4>
+                <p class="text-sm text-gray-600 mt-1">@resource.Description</p>
+            </div>
+            }
+        </div>
+    </div>
+    }
 </main>
 
 <footer class="text-center py-4 bg-white shadow mt-10">

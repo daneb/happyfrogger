@@ -109,13 +109,21 @@
                     </div>
                 </div>
                 <div class="space-y-4">
-                    @foreach (var post in bookPosts.OrderBy(p => p.PublishDate))
+                    @foreach (var post in bookPosts.OrderBy(p => p.ChapterNumber ?? int.MaxValue))
                     {
-                    <a href="@(post.Slug).html" class="block group">
+                    <a href="@post.Slug" class="block group">
                         <div class="flex justify-between items-start p-4 hover:bg-gray-50 rounded-lg">
-                            <div>
-                                <h4 class="font-medium group-hover:text-primary-blue">@post.Title</h4>
-                                <p class="text-sm text-gray-500 mt-1">@post.Description</p>
+                            <div class="flex items-start space-x-3">
+                                @if (post.ChapterNumber.HasValue)
+                                {
+                                <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-primary-blue text-white rounded-full text-sm font-semibold">
+                                    @post.ChapterNumber
+                                </span>
+                                }
+                                <div>
+                                    <h4 class="font-medium group-hover:text-primary-blue">@post.Title</h4>
+                                    <p class="text-sm text-gray-500 mt-1">@post.Description</p>
+                                </div>
                             </div>
                             <svg class="w-5 h-5 text-gray-400 group-hover:text-primary-blue mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />

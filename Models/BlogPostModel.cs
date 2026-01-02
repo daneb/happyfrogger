@@ -17,5 +17,12 @@ public class BlogPostModel
 
     [YamlMember(Alias = "status")]
     public string Status { get; set; } = "published"; // Default to published if not specified
+
+    // Book-specific properties
+    public int? ChapterNumber { get; set; }
+    public int? Progress { get; set; }
+    public string PreviousChapter { get; set; }
+    public string NextChapter { get; set; }
+    public List<StudyResource> StudyResources { get; set; }
 }
 

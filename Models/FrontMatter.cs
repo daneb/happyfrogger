@@ -30,4 +30,20 @@ public class FrontMatter
 
     [YamlMember(Alias = "toc")]
     public bool? Toc { get; set; } // Optional per-post TOC override (null = use default)
+
+    // Book-specific properties
+    [YamlMember(Alias = "chapter_number")]
+    public int? ChapterNumber { get; set; }
+
+    [YamlMember(Alias = "progress")]
+    public int? Progress { get; set; }
+
+    [YamlMember(Alias = "previous_chapter")]
+    public string PreviousChapter { get; set; }
+
+    [YamlMember(Alias = "next_chapter")]
+    public string NextChapter { get; set; }
+
+    [YamlMember(Alias = "study_resources")]
+    public List<StudyResource> StudyResources { get; set; }
 }

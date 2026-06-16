@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <meta name="description" content="{{ description }}">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:description" content="{{ description }}">
+    <meta property="og:url" content="{{ base_url }}/{{ slug }}.html">
+    {{ if social_image }}<meta property="og:image" content="{{ social_image }}">{{ end }}
+    <meta property="og:site_name" content="{{ site_author }}">
+    <meta property="article:published_time" content="{{ publish_date | date.to_string "%Y-%m-%dT%H:%M:%SZ" }}">
+    <meta property="article:section" content="{{ category }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ title }}">
+    <meta name="twitter:description" content="{{ description }}">
+
+    <script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ css_path }}">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="feed.xml">
+</head>
+<body class="is-{{ category }}">
+    <div class="read-progress"></div>
+    <div class="topbar"><div class="topbar__inner">
+        <a class="wordmark" href="{{ home_url }}">{{ site_author }}</a>
+        <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">☾  Dark</button>
+    </div></div>
+
+    <main class="wrap-wide">
+        <header class="article-head">
+            <div class="crumbs">
+                <a href="{{ back_url }}">← {{ back_label }}</a>
+                <a href="{{ home_url }}">Home</a>
+            </div>
+            <span class="kicker center">{{ category }}{{ if sub_category }} · {{ sub_category }}{{ end }}</span>
+            <h1>{{ title }}{{ if status != "published" }}<span class="draft-badge">Draft</span>{{ end }}</h1>
+            <div class="byline meta">
+                <span>{{ site_author }}</span><span>·</span>
+                <span>{{ publish_date | date.to_string "%b %d, %Y" }}</span><span>·</span>
+                <span>{{ reading_time_minutes }} min read</span>
+            </div>
+        </header>
+
+        <div class="reading">
+            <article class="prose">
+                {{ content }}
+            </article>
+            {{ if table_of_contents }}
+            <aside class="rail">
+                {{ table_of_contents }}
+                <div class="rail__share">
+                    <a href="https://twitter.com/intent/tweet?url={{ base_url }}/{{ slug }}.html&text={{ title }}">SHARE</a>
+                    <span style="color:var(--rule)">/</span>
+                    <a href="{{ base_url }}/{{ slug }}.html">COPY LINK</a>
+                </div>
+            </aside>
+            {{ end }}
+        </div>
+
+        {{ if sub_category == "book" && (previous_chapter || next_chapter) }}
+        <nav class="chapter-nav">
+            {{ if previous_chapter }}<a href="{{ previous_chapter }}.html">← Previous chapter</a>{{ else }}<span></span>{{ end }}
+            <a href="{{ back_url }}">All chapters</a>
+            {{ if next_chapter }}<a href="{{ next_chapter }}.html">Next chapter →</a>{{ else }}<span></span>{{ end }}
+        </nav>
+        {{ end }}
+
+        {{ if study_resources && study_resources.size > 0 }}
+        <div class="author-card" style="flex-direction:column;align-items:flex-start;gap:14px;">
+            <div class="rail__label" style="margin:0;">Additional study resources</div>
+            {{ for resource in study_resources }}
+            <div><div class="nm" style="font-size:15px;">{{ resource.title }}</div><p style="margin-top:2px;">{{ resource.description }}</p></div>
+            {{ end }}
+        </div>
+        {{ else }}
+        <div class="author-card">
+            <img src="{{ home_url | string.replace "index.html" "" }}images/me.png" alt="{{ site_author }}" class="avatar-stub" style="width:56px;height:56px;" onerror="this.style.background='repeating-linear-gradient(45deg,var(--paper),var(--paper) 4px,var(--rule) 4px,var(--rule) 8px)';this.removeAttribute('src')"/>
+            <div><div class="nm">{{ site_author }}</div><p>Engineer and writer. Notes on software, faith, and the craft of building.</p></div>
+        </div>
+        {{ end }}
+    </main>
+
+    <footer class="site-footer"><div class="wrap site-footer__inner">
+        <span>© {{ current_year }} {{ site_author }}</span>
+        <span>Built with HappyFrog 🐸</span>
+    </div></footer>
+
+    <script src="{{ js_path }}"></script>
+</body>
+</html>

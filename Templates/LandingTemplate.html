@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site_author }} — Digital Garden</title>
+    <meta name="description" content="{{ site_description }}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ site_author }}">
+    <meta property="og:description" content="{{ site_description }}">
+    <meta property="og:url" content="{{ base_url }}/">
+    <meta property="og:site_name" content="{{ site_author }}">
+
+    <script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ css_path }}">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="feed.xml">
+</head>
+<body>
+    <div class="topbar"><div class="topbar__inner">
+        <a class="wordmark" href="index.html">{{ site_author }}</a>
+        <nav style="display:flex;gap:4px;">
+            <a class="nav" href="tech.html">Tech</a>
+            <a class="nav" href="faith.html">Faith</a>
+            <a class="nav" href="creative.html">Creative</a>
+        </nav>
+        <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">☾  Dark</button>
+    </div></div>
+
+    <main class="wrap">
+        <header class="masthead">
+            <img src="images/me.png" alt="{{ site_author }}" class="masthead__avatar"/>
+            <h1>Welcome to my Digital Garden</h1>
+            <p>{{ site_description }}</p>
+            <div class="masthead__links">
+                <a href="tech.html">Writing</a>
+                <a href="faith.html">The Book</a>
+                <a href="feed.xml">RSS</a>
+            </div>
+        </header>
+
+        {{ if featured_book }}
+        <a class="book-feature" href="{{ featured_book.base_url }}index.html">
+            <div class="book-cover" style="width:96px;height:140px;">
+                <span class="meta" style="color:oklch(0.92 0.04 60/0.7);font-size:7.5px;">A Memoir</span>
+                <span class="ttl" style="font-size:13px;margin-top:4px;">{{ featured_book.title }}</span>
+            </div>
+            <div class="book-feature__body">
+                <span class="kicker" style="--sec:var(--accent)">New book · In progress</span>
+                <h2>{{ featured_book.title }}</h2>
+                <p>{{ featured_book.description }}</p>
+                <div class="progress" style="--sec:var(--accent)"><span style="width:{{ featured_book.progress }}%"></span></div>
+                <div class="meta" style="margin-top:9px;">{{ featured_book.progress }}% complete &nbsp;·&nbsp; <span style="color:var(--accent)">Read available chapters →</span></div>
+            </div>
+        </a>
+        {{ end }}
+
+        {{ for section in sections }}
+        <section class="section-block is-{{ section.category }}">
+            <div class="section-block__head">
+                <div>
+                    <span class="kicker">{{ section.category }}</span>
+                    <h3>{{ section.heading }}</h3>
+                </div>
+                <a class="more" href="{{ section.category }}.html">{{ section.cta }} →</a>
+            </div>
+            {{ for post in section.posts | array.limit 3 }}
+            <a class="post-row" href="./{{ post.slug }}.html">
+                <span class="t">{{ post.title }}</span>
+                <span class="meta m">{{ post.publish_date | date.to_string "%b %d, %Y" | string.upcase }} · {{ post.reading_time_minutes }} MIN</span>
+            </a>
+            {{ end }}
+        </section>
+        {{ end }}
+    </main>
+
+    <footer class="site-footer"><div class="wrap site-footer__inner">
+        <span>© {{ current_year }} {{ site_author }}</span>
+        <span>Built with HappyFrog 🐸</span>
+    </div></footer>
+
+    <script src="{{ js_path }}"></script>
+</body>
+</html>

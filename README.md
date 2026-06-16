@@ -1,268 +1,206 @@
-# HappyFrogger 🐸
+# HappyFrog 🐸
 
-A lightweight static site generator built with C# and Razor, designed for developers who want a simple yet powerful blogging platform.
+A lightweight static site generator in C# / .NET 8. Write Markdown with front matter, run one command, get a fast, warm, reading-first site — with first-class support for **books** (grouped into Parts, with coming-soon chapters and a multi-book shelf) and light/dark themes.
 
-![HappyFrogger](happyblogger.png)
+No Node. No Tailwind. No build step for CSS — the design system is one hand-authored `theme.css`.
 
-## Features
+---
 
-- 📝 Write in Markdown with front matter support
-- 🎨 Beautiful styling with Tailwind CSS
-- 🖼️ Templating with Razor pages
-- 📊 Categories and subcategories for content organization
-- 📋 GitHub Gist embedding support
-- 🚀 Fast and efficient static site generation
-- 📱 Fully responsive design
-- 🔄 Live reload during development
-- ⚙️ Flexible JSON configuration system
-- 📁 Configurable input/output directories
-- 📝 Draft post support
-- 📡 RSS 2.0 feed generation with configurable options
+## Quick start
 
-## Prerequisites
-
-- .NET 8.0 or higher
-- Node.js (for Tailwind CSS)
-- Basic knowledge of C# and Markdown
-
-## Quick Start
-
-1. Clone the repository
-```bash
-git clone https://github.com/yourusername/happyfrogger.git
-cd happyfrogger
-```
-
-2. Install Node.js dependencies
-```bash
-npm install
-```
-
-3. Build the project
 ```bash
 dotnet build
+
+# scaffold a new draft and start writing
+dotnet run -- new "My First Post" -c tech
+
+# build the site
+dotnet run
+
+# build + live-reload preview at http://localhost:4000
+dotnet run -- --serve
 ```
 
-4. Start writing! Create a new markdown file in `MarkdownFiles/` with front matter:
+Generated HTML lands in your configured `outputPath`. Deploy that folder anywhere static (GitHub Pages, Netlify, S3, …).
+
+> Tip: alias `hf="dotnet run --"` so the commands read `hf new …`, `hf serve`, `hf`.
+
+---
+
+## Writing
+
+### A post
+
 ```markdown
 ---
-title: "My First Post"
-date: 2024-01-14
-category: tech
-subcategory: csharp
-description: A sample post
-slug: my-first-post
+title: "Why I switched editors"
+date: 2025-06-01
+category: tech          # tech | faith | creative
+subcategory: tooling    # optional — shows as a tag / filter chip
+description: "A short, honest account."
+slug: why-i-switched-editors
+status: published       # or "draft" to exclude from builds
+toc: true               # optional override; default from config
 ---
 
-Your content here...
+Your Markdown here…
 ```
 
-## Project Structure
-
-```
-HappyFrogger/
-├── MarkdownFiles/        # Your markdown content
-├── Output/              # Generated static site
-├── Templates/           # Razor templates
-│   ├── BlogTemplate.cshtml
-│   ├── CategoryTemplate.cshtml
-│   └── LandingTemplate.cshtml
-├── Models/              # C# model classes
-│   ├── BlogPostModel.cs
-│   ├── CategoryPageModel.cs
-│   ├── LandingPageModel.cs
-│   ├── FrontMatter.cs
-│   └── HappyFrogConfig.cs
-├── Program.cs          # Main generation logic
-├── happyfrog.config.json # Configuration file
-├── styles.css          # Tailwind entry point
-└── tailwind.config.js  # Tailwind configuration
-```
-
-## Writing Content
-
-### Front Matter
-Each markdown file requires front matter at the top:
-```yaml
----
-title: "Post Title"
-date: YYYY-MM-DD
-category: tech|faith|creative
-subcategory: your-subcategory
-description: Brief description
-slug: url-friendly-title
-status: published  # or "draft" to exclude from builds
----
-```
+`hf new "Title" -c tech` writes this front matter for you (as a draft) so you can jump straight to writing.
 
 ### Categories
-The site supports three main categories:
-- `tech`: Technical articles and tutorials
-- `faith`: Faith-based content and reflections
-- `creative`: Creative writing and personal posts
+
+Three sections, each with its own colour mood on the site: `tech`, `faith`, `creative`. Titles/descriptions live in `CategoryInfo` (`Models/CategoryPageModel.cs`).
 
 ### Embedding Gists
-To embed a GitHub Gist:
+
 ```markdown
-[gist:gist-id]
+[gist:GIST_ID]
 ```
 
-## Configuration
+### Tables of contents
 
-HappyFrogger uses a `happyfrog.config.json` file for flexible configuration. This allows you to customize paths, build options, and site metadata without modifying code.
+If a post has at least `toc.minHeadings` headings, a contents list is generated automatically and rendered in the article's sticky side rail. Override per-post with `toc: true|false`.
 
-### Configuration File Structure
+---
+
+## Books
+
+Books are more than a folder of posts. Each book has a **`book.json` manifest** that defines its Parts, epigraphs, and chapter order — including chapters you haven't written yet (they render as dimmed *Coming soon* rows).
+
+### 1. Configure the book in `happyfrog.config.json`
+
+```json
+"books": [
+  {
+    "id": "biblical-understanding",
+    "title": "A Dad's Memoir of Biblical Truth",
+    "path": "../blog/books/biblical-understanding",
+    "outputPath": "../blog/books/biblical-understanding",
+    "category": "faith"
+  },
+  { "id": "untitled-next", "title": "Untitled (next book)", "category": "faith", "planned": true }
+]
+```
+
+A `"planned": true` entry has no folder yet and appears on the **shelf** of other books.
+
+### 2. Add a `book.json` to the book folder
 
 ```json
 {
-  "markdownFilesPath": "MarkdownFiles",
-  "outputPath": "Output",
-  "templatesPath": "Templates",
-  "site": {
-    "title": "HappyFrogger Blog",
-    "description": "A lightweight static site generator",
-    "author": "Your Name",
-    "baseUrl": "https://yourdomain.com"
-  },
-  "build": {
-    "generateCategoryPages": true,
-    "generateLandingPage": true,
-    "htmlExtension": ".html",
-    "includeDrafts": false,
-    "categories": ["tech", "faith", "creative"],
-    "rss": {
-      "enabled": true,
-      "path": "feed.xml",
-      "itemCount": 20,
-      "fullContent": true
+  "id": "biblical-understanding",
+  "title": "A Dad's Memoir of Biblical Truth",
+  "subtitle": "A journey through Scripture to equip the everyday man.",
+  "category": "faith",
+  "status": "In progress",
+  "parts": [
+    {
+      "label": "Part I",
+      "title": "Understanding the Foundation",
+      "epigraph": "Getting oriented with God's Word",
+      "chapters": ["the-absent-man", "unlocking-your-bible-understanding", "gods-programme", "why-bible-versions-matter"]
+    },
+    {
+      "label": "Part II",
+      "title": "The Journey of Salvation",
+      "chapters": [
+        { "slug": "the-gospel-message", "title": "The Gospel Message", "description": "What the good news actually is." }
+      ]
     }
-  }
+  ]
 }
 ```
 
-### Configuration Options
+A chapter is **available** when a published `.md` with that slug exists in the folder; otherwise it shows as *Coming soon* using the manifest's title/description. Progress is computed as `available / total`.
 
-#### Paths
-- **markdownFilesPath**: Directory containing your markdown files (default: `"MarkdownFiles"`)
-- **outputPath**: Directory where HTML files will be generated (default: `"Output"`)
-- **templatesPath**: Directory containing Razor templates (default: `"Templates"`)
+### 3. Write chapters
 
-#### Site Metadata
-- **title**: Your site's title
-- **description**: Site description for meta tags
-- **author**: Content author name
-- **baseUrl**: Base URL for your site (useful for RSS feeds, sitemaps)
+Ordinary posts in the book folder, with `subcategory: book` and a `chapter_number`:
 
-#### Build Options
-- **generateCategoryPages**: Enable/disable category page generation (default: `true`)
-- **generateLandingPage**: Enable/disable landing page generation (default: `true`)
-- **htmlExtension**: File extension for generated HTML files (default: `".html"`)
-- **includeDrafts**: Include posts with `status: draft` in builds (default: `false`)
-- **categories**: Array of categories to generate pages for (default: `["tech", "faith", "creative"]`)
-- **rss**: RSS feed configuration options
-  - **enabled**: Enable/disable RSS feed generation (default: `true`)
-  - **path**: Output path for RSS feed file (default: `"feed.xml"`)
-  - **itemCount**: Maximum number of posts in feed, 0 for all (default: `20`)
-  - **fullContent**: Include full HTML content or just description (default: `true`)
-
-### Path Validation
-
-When you run HappyFrogger, it will validate all configured paths and display:
-- ✓ Green checkmarks for valid paths
-- ✗ Red crosses for missing paths
-- File counts for markdown directories
-- Automatic creation of output directory if missing
-
-Example output:
-```
-═══════════════════════════════════════════════
-   HappyFrogger - Static Site Generator 🐸
-═══════════════════════════════════════════════
-
-Configuration loaded from: happyfrog.config.json
-
-Configuration Check:
-─────────────────────────────────────────────
-✓ Templates Path: /path/to/Templates
-✓ Markdown Files Path: MarkdownFiles (23 files)
-✓ Output Path: Output
-─────────────────────────────────────────────
-
-Build Settings:
-  • Generate Landing Page: True
-  • Generate Category Pages: True
-  • Include Drafts: False
-  • Categories: tech, faith, creative
+```markdown
+---
+title: "The Absent Man"
+date: 2025-01-04
+category: faith
+subcategory: book
+slug: the-absent-man
+status: published
+chapter_number: 1
+next_chapter: unlocking-your-bible-understanding
+---
 ```
 
-## Development
+A complete, runnable example (manifest + four written chapters + two coming-soon) lives in [`example/`](example/).
 
-### Watching for Changes
+---
 
-1. Start Tailwind CSS watcher:
-```bash
-npm run watch:css
+## Project structure
+
+```
+HappyFrog/
+├── Templates/
+│   ├── LandingTemplate.html
+│   ├── BlogTemplate.html
+│   ├── BookIndexTemplate.html
+│   ├── CategoryTemplate.html
+│   └── assets/
+│       ├── theme.css        # the whole design system (light + dark)
+│       └── theme.js         # theme toggle, reading progress, active TOC
+├── Models/                  # C# data + view models
+├── Program.cs               # build pipeline + CLI
+├── PostProcessor.cs         # Markdown → HTML, front matter, TOC, reading time
+├── BookProcessor.cs         # book.json → parts, chapters, shelf
+├── PageGenerator.cs         # Scriban rendering
+├── AssetGenerator.cs        # copies theme assets + RSS + sitemap
+├── Commands.cs              # `hf new`
+└── happyfrog.config.json
 ```
 
-2. Build CSS for production:
-```bash
-npm run build:css
-```
+Templates are [Scriban](https://github.com/scriban/scriban). Model properties map to `snake_case` in templates (`PublishDate` → `publish_date`).
 
-### Template Customization
+---
 
-Templates are located in the `Templates/` directory:
-- `BlogTemplate.cshtml`: Individual post template
-- `CategoryTemplate.cshtml`: Category page template
-- `LandingTemplate.cshtml`: Home page template
+## Theming
 
-## Deployment
+The site ships light and dark. `theme.js` respects the OS preference on first visit, remembers the visitor's choice (`localStorage`), and a no-flash snippet in each template `<head>` sets the theme before first paint. To retune colours, edit the CSS custom properties at the top of `theme.css` — the section moods (`--tech`, `--faith`, `--creative`) and the warm accent are all there.
 
-1. Generate the site:
-```bash
-dotnet run
-```
+---
 
-2. The static site will be generated in the `Output/` directory
-3. Copy all files in `Output/` to the GitHub Pages repository or your web host
-3. Deploy the contents of `Output/` to your web host
+## Configuration
 
-## Contributing
+`happyfrog.config.json` controls paths, site metadata, categories, books, RSS, sitemap, and TOC behaviour. See [`example/happyfrog.config.json`](example/happyfrog.config.json) for a complete file.
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+| Key | Purpose |
+|---|---|
+| `markdownFilesPath` / `outputPath` / `templatesPath` | where content, output, and templates live |
+| `site.{title,description,author,baseUrl}` | metadata + masthead copy |
+| `build.categories` | the sections to generate |
+| `build.includeDrafts` | include `status: draft` posts (or pass `--drafts`) |
+| `build.toc` | TOC thresholds and title |
+| `books[]` | book folders + planned future books |
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+---
+
+## CLI
+
+| Command | Does |
+|---|---|
+| `dotnet run` | build the site |
+| `dotnet run -- --serve [--port 4000]` | build + watch + live-reload preview |
+| `dotnet run -- --drafts` | include drafts in the build |
+| `dotnet run -- new "Title" -c tech [-s sub] [--book id]` | scaffold a draft post (or book chapter) |
+
+---
+
+## Dependencies
+
+- [Markdig](https://github.com/xoofx/markdig) — Markdown
+- [Scriban](https://github.com/scriban/scriban) — templating
+- [YamlDotNet](https://github.com/aaubry/YamlDotNet) — front matter
+
+Tailwind and Node are **no longer required** — delete `input.css`, `output.css`, `tailwind.config.js`, and the npm `*:css` scripts.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details
-
-## Acknowledgments
-
-- [Markdig](https://github.com/xoofx/markdig) for Markdown processing
-- [RazorLight](https://github.com/toddams/RazorLight) for template generation
-- [Tailwind CSS](https://tailwindcss.com/) for styling
-- [YamlDotNet](https://github.com/aaubry/YamlDotNet) for YAML processing
-
-## Changelog
-
-See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes.
-
-## Future Enhancements
-
-- [ ] Dynamic index.html generation
-- [ ] Automatic deployment to GitHub Pages
-- [ ] Incremental builds for unchanged files
-- [ ] RSS feed generation
-- [ ] Search functionality
-- [ ] Tags support
-- [ ] Image optimization
-- [ ] Watch mode for automatic rebuilds
-
-## Support
-
-For support, please open an issue in the GitHub repository or reach out to the maintainers.
+MIT.

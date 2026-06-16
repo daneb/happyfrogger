@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} — {{ site_author }}</title>
+    <meta name="description" content="{{ description }}">
+    <meta property="og:type" content="book">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:description" content="{{ description }}">
+    <meta property="og:site_name" content="{{ site_author }}">
+
+    <script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ css_path }}">
+</head>
+<body class="is-{{ category }}">
+    <div class="topbar"><div class="topbar__inner">
+        <a class="wordmark" href="{{ home_url }}">{{ site_author }}</a>
+        <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">☾  Dark</button>
+    </div></div>
+
+    <main>
+        <div class="wrap-wide" style="padding-top:28px;"><a class="meta" style="text-decoration:none;" href="{{ category_url }}">← {{ category_label }}</a></div>
+
+        <section class="book-hero"><div class="wrap-wide"><div class="book-hero__inner">
+            <div class="cover">
+                <span class="meta" style="color:oklch(0.93 0.03 86/0.7)">A Memoir</span>
+                <div>
+                    <div style="font-family:var(--sans);font-weight:700;font-size:24px;line-height:1.08;color:oklch(0.97 0.02 86)">{{ title }}</div>
+                    <div style="font-family:var(--serif);font-style:italic;font-size:13px;color:oklch(0.9 0.03 86/0.85);margin-top:12px;">{{ site_author }}</div>
+                </div>
+            </div>
+            <div style="flex:1;min-width:280px;">
+                <span class="kicker">{{ category }} · Book in progress</span>
+                <h1>{{ title }}</h1>
+                <p class="sub">{{ description }}</p>
+                <div class="progress" style="max-width:380px;"><span style="width:{{ progress }}%"></span></div>
+                <div class="meta" style="margin-top:11px;">{{ progress }}% complete · {{ chapters_available }} of {{ chapters_total }} chapters</div>
+                {{ if first_chapter }}<div style="margin-top:24px;"><a class="btn" href="{{ first_chapter }}.html">Start reading →</a></div>{{ end }}
+            </div>
+        </div></div></section>
+
+        <div class="wrap">
+            {{ for part in parts }}
+            <div class="part">
+                <div class="part__label"><span class="l">{{ part.label }}</span><span class="ln"></span></div>
+                <h2>{{ part.title }}</h2>
+                {{ if part.epigraph }}<p class="epigraph">“{{ part.epigraph }}”</p>{{ end }}
+                {{ for chapter in part.chapters }}
+                {{ if chapter.available }}
+                <a class="chapter" href="{{ chapter.slug }}.html">
+                    <span class="num">{{ if chapter.chapter_number < 10 }}0{{ end }}{{ chapter.chapter_number }}</span>
+                    <span class="body"><span class="t">{{ chapter.title }}</span>{{ if chapter.description }}<span class="d">{{ chapter.description }}</span>{{ end }}</span>
+                    <span class="rt">{{ chapter.reading_time_minutes }} min</span>
+                </a>
+                {{ else }}
+                <div class="chapter soon">
+                    <span class="num">{{ if chapter.chapter_number < 10 }}0{{ end }}{{ chapter.chapter_number }}</span>
+                    <span class="body"><span class="t">{{ chapter.title }}</span>{{ if chapter.description }}<span class="d">{{ chapter.description }}</span>{{ end }}</span>
+                    <span class="tag">Coming soon</span>
+                </div>
+                {{ end }}
+                {{ end }}
+            </div>
+            {{ end }}
+
+            {{ if other_books && other_books.size > 0 }}
+            <div class="shelf">
+                <div class="shelf__label">More from the shelf</div>
+                <div class="shelf__row">
+                    {{ for b in other_books }}
+                    {{ if b.planned }}
+                    <span class="shelf__item" style="opacity:.6"><span class="mini planned"></span><span><span class="nm">{{ b.title }}</span><span class="st">PLANNED</span></span></span>
+                    {{ else }}
+                    <a class="shelf__item" href="{{ b.base_url }}index.html"><span class="mini"></span><span><span class="nm">{{ b.title }}</span><span class="st">{{ b.status }}</span></span></a>
+                    {{ end }}
+                    {{ end }}
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </main>
+
+    <footer class="site-footer"><div class="wrap site-footer__inner">
+        <span>© {{ current_year }} {{ site_author }}</span>
+        <span>Built with HappyFrog 🐸</span>
+    </div></footer>
+
+    <script src="{{ js_path }}"></script>
+</body>
+</html>

@@ -25,4 +25,3 @@ public class BlogPostModel
     public string NextChapter { get; set; }
     public List<StudyResource> StudyResources { get; set; }
 }
-

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} — {{ site_author }}</title>
+    <meta name="description" content="{{ description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:description" content="{{ description }}">
+    <meta property="og:url" content="{{ base_url }}/{{ category }}.html">
+    <meta property="og:site_name" content="{{ site_author }}">
+
+    <script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ css_path }}">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="feed.xml">
+</head>
+<body class="is-{{ category }}">
+    <div class="topbar"><div class="topbar__inner">
+        <a class="wordmark" href="{{ home_url }}">{{ site_author }}</a>
+        <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">☾  Dark</button>
+    </div></div>
+
+    <main class="wrap">
+        <a class="meta" href="{{ home_url }}" style="text-decoration:none;">← Home</a>
+        <header class="section-head">
+            <span class="kicker">{{ category }}</span>
+            <h1>{{ title }}</h1>
+            <p>{{ description }}</p>
+        </header>
+
+        {{ for book in books }}
+        <a class="book-strip" href="{{ book.base_url }}index.html">
+            <span class="mini"></span>
+            <span style="flex:1">
+                <span class="meta" style="color:var(--sec)">Book in progress</span>
+                <div class="t">{{ book.title }}</div>
+                <div class="d">{{ book.progress }}% complete · {{ book.chapters.size }} chapters</div>
+            </span>
+            <span class="open">Open →</span>
+        </a>
+        {{ end }}
+
+        {{ if sub_categories && sub_categories.size > 0 }}
+        <div class="filters">
+            <h2>Writing</h2>
+            <div class="chips">
+                <span class="chip active">All</span>
+                {{ for sc in sub_categories }}<span class="chip">{{ sc }}</span>{{ end }}
+            </div>
+        </div>
+        {{ end }}
+
+        {{ for year_group in posts_by_year }}
+        <div class="year">
+            <div class="year__label">{{ year_group.year }}</div>
+            {{ for post in year_group.posts }}
+            <a class="entry" href="{{ post.slug }}.html">
+                <div class="meta">{{ post.publish_date | date.to_string "%b %d, %Y" }} · {{ post.reading_time_minutes }} min read</div>
+                <div class="t">{{ post.title }}</div>
+                {{ if post.description }}<p class="d">{{ post.description }}</p>{{ end }}
+            </a>
+            {{ end }}
+        </div>
+        {{ end }}
+    </main>
+
+    <footer class="site-footer"><div class="wrap site-footer__inner">
+        <span>© {{ current_year }} {{ site_author }}</span>
+        <span>Built with HappyFrog 🐸</span>
+    </div></footer>
+
+    <script src="{{ js_path }}"></script>
+</body>
+</html>

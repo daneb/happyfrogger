@@ -9,42 +9,29 @@
       "description": "A journey through Scripture to equip the everyday man.",
       "path": "../blog/books/biblical-understanding",
       "outputPath": "../blog/books/biblical-understanding",
-      "coverImage": "",
       "category": "faith"
+    },
+    {
+      "id": "untitled-next",
+      "title": "Untitled (next book)",
+      "category": "faith",
+      "planned": true
     }
   ],
   "site": {
     "title": "Dane Balia",
-    "description": "Software developer sharing insights on tech, faith, and creativity",
+    "description": "Engineer, writer, and father. Notes on building software, walking in faith, and the craft of making things that last.",
     "author": "Dane Balia",
     "baseUrl": "https://danebalia.com"
   },
   "build": {
     "generateCategoryPages": true,
     "generateLandingPage": true,
-    "htmlExtension": ".html",
     "includeDrafts": false,
-    "categories": [
-      "tech",
-      "faith",
-      "creative"
-    ],
+    "categories": ["tech", "faith", "creative"],
     "wordsPerMinute": 200,
-    "rss": {
-      "enabled": true,
-      "path": "feed.xml",
-      "itemCount": 20,
-      "fullContent": true
-    },
-    "sitemap": {
-      "enabled": true,
-      "path": "sitemap.xml"
-    },
-    "toc": {
-      "enabledByDefault": true,
-      "minHeadings": 3,
-      "maxLevel": 3,
-      "title": "Table of Contents"
-    }
+    "rss": { "enabled": true, "path": "feed.xml", "itemCount": 20, "fullContent": true },
+    "sitemap": { "enabled": true, "path": "sitemap.xml" },
+    "toc": { "enabledByDefault": true, "minHeadings": 3, "maxLevel": 3, "title": "Contents" }
   }
 }

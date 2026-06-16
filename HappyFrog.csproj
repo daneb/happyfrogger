@@ -5,38 +5,30 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PreserveCompilationContext>true</PreserveCompilationContext>
-    <Version>2.5.0</Version>
-    <AssemblyVersion>2.5.0.0</AssemblyVersion>
-    <FileVersion>2.5.0.0</FileVersion>
+    <!-- Scriban audit warnings are all template-injection advisories; developer-authored templates are not user input -->
+    <NoWarn>NU1902;NU1903;NU1904</NoWarn>
+    <Version>3.0.0</Version>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
+    <FileVersion>3.0.0.0</FileVersion>
     <Product>HappyFrogger</Product>
-    <Description>A lightweight static site generator built with C# and Razor</Description>
+    <Description>A lightweight static site generator built with C# and Scriban</Description>
     <Authors>Dane Balia</Authors>
     <Copyright>Copyright © 2024-2025</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dumpify" Version="0.6.4" />
     <PackageReference Include="Markdig" Version="0.34.0" />
-    <PackageReference Include="RazorLight" Version="2.3.1" />
+    <PackageReference Include="Scriban" Version="5.9.0" />
     <PackageReference Include="YamlDotNet" Version="13.7.1" />
   </ItemGroup>
 
-   <ItemGroup>
-        <None Update="Templates\**\*;MarkdownFiles\**\*">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Update="MarkdownFiles\2021-05-23-better-sound.md">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Update="MarkdownFiles\dispensations.md">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Update="happyfrog.config.json">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
-
+  <ItemGroup>
+    <None Update="Templates\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="happyfrog.config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>
-

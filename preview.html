@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>danebalia.com — design system preview</title>
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="read-progress"></div>
+
+<div class="topbar"><div class="topbar__inner">
+  <a class="wordmark" href="#">danebalia.com</a>
+  <nav style="display:flex;gap:4px;"><a class="nav" href="#landing">Landing</a><a class="nav" href="#article">Article</a><a class="nav" href="#book">Book</a><a class="nav" href="#section">Section</a></nav>
+  <button class="theme-toggle" data-theme-toggle>☾  Dark</button>
+</div></div>
+
+<!-- LANDING -->
+<main id="landing" class="wrap">
+  <header class="masthead">
+    <div class="masthead__avatar" style="background:repeating-linear-gradient(45deg,var(--paper-2),var(--paper-2) 5px,var(--rule) 5px,var(--rule) 10px)"></div>
+    <h1>Dane Balia</h1>
+    <p>Engineer, writer, and father. Notes on building software, walking in faith, and the craft of making things that last.</p>
+    <div class="masthead__links"><a href="#">Writing</a><a href="#">The Book</a><a href="#">About</a><a href="#">RSS</a></div>
+  </header>
+
+  <a class="book-feature" href="#book">
+    <div class="book-cover" style="width:96px;height:140px;"><span class="meta" style="color:oklch(0.92 0.04 60/0.7);font-size:7.5px;">A MEMOIR</span><span class="ttl" style="font-size:13px;margin-top:4px;">A Dad's Memoir of Biblical Truth</span></div>
+    <div class="book-feature__body">
+      <span class="kicker" style="--sec:var(--accent)">New book · In progress</span>
+      <h2>A Dad's Memoir of Biblical Truth</h2>
+      <p>A journey through Scripture to equip the everyday man.</p>
+      <div class="progress" style="--sec:var(--accent)"><span style="width:12%"></span></div>
+      <div class="meta" style="margin-top:9px;">12% complete &nbsp;·&nbsp; <span style="color:var(--accent)">Read available chapters →</span></div>
+    </div>
+  </a>
+
+  <section class="section-block is-tech">
+    <div class="section-block__head"><div><span class="kicker">Tech</span><h3>Building software</h3></div><a class="more" href="#section">All articles →</a></div>
+    <a class="post-row" href="#article"><span class="t">4 Pitfalls in Using AI to Build Software</span><span class="meta m">JAN 08 2025 · 5 MIN</span></a>
+    <a class="post-row" href="#article"><span class="t">Guideposts to Measuring Developers</span><span class="meta m">AUG 05 2024 · 6 MIN</span></a>
+    <a class="post-row" href="#article"><span class="t">Reverse Engineering Chaos Through Black Holes</span><span class="meta m">JUL 24 2024 · 13 MIN</span></a>
+  </section>
+
+  <section class="section-block is-faith">
+    <div class="section-block__head"><div><span class="kicker">Faith</span><h3>Faith &amp; wisdom</h3></div><a class="more" href="#section">All writing →</a></div>
+    <a class="post-row" href="#article"><span class="t">Why Bible Versions Matter</span><span class="meta m">JAN 02 2026 · 12 MIN</span></a>
+    <a class="post-row" href="#article"><span class="t">God's Programme</span><span class="meta m">MAR 07 2025 · 8 MIN</span></a>
+    <a class="post-row" href="#article"><span class="t">Unlocking Your Biblical Understanding</span><span class="meta m">FEB 01 2025 · 8 MIN</span></a>
+  </section>
+
+  <section class="section-block is-creative">
+    <div class="section-block__head"><div><span class="kicker">Creative</span><h3>The creative corner</h3></div><a class="more" href="#section">All pieces →</a></div>
+    <a class="post-row" href="#article"><span class="t">Our Adventure</span><span class="meta m">NOV 12 2024 · 4 MIN</span></a>
+    <a class="post-row" href="#article"><span class="t">On Raising Kids</span><span class="meta m">SEP 30 2024 · 7 MIN</span></a>
+  </section>
+</main>
+
+<!-- ARTICLE -->
+<main id="article" class="wrap-wide is-tech">
+  <hr class="hr" style="margin:64px 0">
+  <header class="article-head">
+    <div class="crumbs"><a href="#section">← Tech</a><a href="#landing">Home</a></div>
+    <span class="kicker center">Tech · AI</span>
+    <h1>4 Pitfalls in Using AI to Build Software</h1>
+    <div class="byline meta"><span style="display:flex;align-items:center;gap:8px;"><span class="avatar-stub" style="width:22px;height:22px;background:repeating-linear-gradient(45deg,var(--paper-2),var(--paper-2) 3px,var(--rule) 3px,var(--rule) 6px)"></span>Dane Balia</span><span>·</span><span>Jan 08, 2025</span><span>·</span><span>5 min read</span></div>
+  </header>
+
+  <div class="reading">
+    <article class="prose">
+      <p>AI has evolved into a clear productivity multiplier for developers. Yet some remain skeptical, frustrated by its limitations.</p>
+      <p>The issue often isn't the tool — it's misaligned expectations. Like any powerful technology, success comes from leveraging its strengths rather than fixating on what it can't do.</p>
+      <h2 id="framing">Pitfall #1 — Poor problem framing</h2>
+      <p>Problem definition matters. Keywords play such a huge role they can change the nature of the implementation entirely. If I drew a circle and asked <em>“what is this familiar object?”</em> you would immediately say a circle.</p>
+      <blockquote>“How you frame the problem decides the shape of the answer — long before the model ever responds.”</blockquote>
+      <h2 id="reliance">Pitfall #2 — Over-reliance on AI</h2>
+      <p>Treat the model as a collaborator, not an oracle. The strongest results come from a tight loop where you supply judgement and it supplies breadth.</p>
+      <pre><code>Role: senior reviewer
+Context: [paste the failing test]
+Task: explain the root cause,
+      then propose the smallest fix.</code></pre>
+      <h2 id="context">Pitfall #3 — Insufficient context</h2>
+      <p>Iterate in small, verifiable steps. Each turn should leave you with something you can run, read, and reason about.</p>
+    </article>
+    <aside class="rail">
+      <nav class="toc">
+        <div class="toc-title">Contents</div>
+        <ul class="toc-list">
+          <li><a href="#framing">Poor problem framing</a></li>
+          <li><a href="#reliance">Over-reliance on AI</a></li>
+          <li><a href="#context">Insufficient context</a></li>
+        </ul>
+      </nav>
+      <div class="rail__share"><a href="#">SHARE</a><span style="color:var(--rule)">/</span><a href="#">COPY LINK</a></div>
+    </aside>
+  </div>
+
+  <div class="author-card">
+    <span class="avatar-stub" style="width:56px;height:56px;background:repeating-linear-gradient(45deg,var(--paper),var(--paper) 4px,var(--rule) 4px,var(--rule) 8px)"></span>
+    <div><div class="nm">Dane Balia</div><p>Engineer and writer. I publish notes on software, faith, and the craft of building.</p></div>
+  </div>
+</main>
+
+<!-- BOOK INDEX -->
+<main id="book" class="is-faith">
+  <hr class="hr" style="margin:64px 0">
+  <div class="wrap-wide"><a class="meta" href="#section" style="text-decoration:none;">← Faith &amp; Wisdom</a></div>
+  <section class="book-hero"><div class="wrap-wide"><div class="book-hero__inner">
+    <div class="cover"><span class="meta" style="color:oklch(0.93 0.03 86/0.7)">A MEMOIR</span><div><div style="font-family:var(--sans);font-weight:700;font-size:24px;line-height:1.08;color:oklch(0.97 0.02 86)">A Dad's Memoir of Biblical Truth</div><div style="font-family:var(--serif);font-style:italic;font-size:13px;color:oklch(0.9 0.03 86/0.85);margin-top:12px;">Dane Balia</div></div></div>
+    <div style="flex:1;min-width:280px;">
+      <span class="kicker">Faith · Book in progress</span>
+      <h1>A Dad's Memoir of Biblical Truth</h1>
+      <p class="sub">A journey through Scripture to equip the everyday man — written one chapter at a time, in the open.</p>
+      <div class="progress" style="max-width:380px;"><span style="width:12%"></span></div>
+      <div class="meta" style="margin-top:11px;">12% complete · 5 of 18 chapters</div>
+      <div style="margin-top:24px;"><a class="btn" href="#article">Start reading →</a></div>
+    </div>
+  </div></div></section>
+
+  <div class="wrap">
+    <div class="part">
+      <div class="part__label"><span class="l">Part I</span><span class="ln"></span></div>
+      <h2>Understanding the Foundation</h2>
+      <p class="epigraph">“Getting oriented with God's Word.”</p>
+      <a class="chapter" href="#article"><span class="num">01</span><span class="body"><span class="t">The Absent Man</span><span class="d">Why good men matter.</span></span><span class="rt">9 min</span></a>
+      <a class="chapter" href="#article"><span class="num">02</span><span class="body"><span class="t">Unlocking Your Bible Understanding</span><span class="d">The right tools deliver the right results.</span></span><span class="rt">8 min</span></a>
+      <a class="chapter" href="#article"><span class="num">03</span><span class="body"><span class="t">God's Eternal Programme</span><span class="d">The purpose, plan, and timeline of God.</span></span><span class="rt">8 min</span></a>
+    </div>
+    <div class="part">
+      <div class="part__label"><span class="l">Part II</span><span class="ln"></span></div>
+      <h2>The Journey of Salvation</h2>
+      <p class="epigraph">“The core of Christian faith and life.”</p>
+      <div class="chapter soon"><span class="num">05</span><span class="body"><span class="t">The Gospel Message</span><span class="d">What the good news actually is.</span></span><span class="tag">Coming soon</span></div>
+      <div class="chapter soon"><span class="num">06</span><span class="body"><span class="t">The Cross of Salvation</span><span class="d">The centre of everything.</span></span><span class="tag">Coming soon</span></div>
+    </div>
+    <div class="shelf">
+      <div class="shelf__label">More from the shelf</div>
+      <div class="shelf__row">
+        <a class="shelf__item" href="#"><span class="mini"></span><span><span class="nm">A Dad's Memoir</span><span class="st">IN PROGRESS</span></span></a>
+        <span class="shelf__item" style="opacity:.6"><span class="mini planned"></span><span><span class="nm">Untitled</span><span class="st">PLANNED</span></span></span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- SECTION -->
+<main id="section" class="wrap is-faith">
+  <hr class="hr" style="margin:64px 0">
+  <a class="meta" href="#landing" style="text-decoration:none;">← Home</a>
+  <header class="section-head"><span class="kicker">Faith</span><h1>Faith &amp; Wisdom</h1><p>Explorations in Christian living, Biblical insight, and my upcoming book.</p></header>
+  <a class="book-strip" href="#book"><span class="mini"></span><span style="flex:1"><span class="meta" style="color:var(--sec)">BOOK IN PROGRESS</span><div class="t">A Dad's Memoir of Biblical Truth</div><div class="d">12% complete · 5 of 18 chapters</div></span><span class="open">Open →</span></a>
+  <div class="filters"><h2>Writing</h2><div class="chips"><span class="chip active">All</span><span class="chip">devotion</span><span class="chip">sermon</span></div></div>
+  <div class="year"><div class="year__label">2026</div><a class="entry" href="#article"><div class="meta">Jan 02, 2026 · 12 min read</div><div class="t">Why Bible Versions Matter</div><p class="d">A careful look at translation philosophy and why I read the KJB.</p></a></div>
+  <div class="year"><div class="year__label">2025</div>
+    <a class="entry" href="#article"><div class="meta">Mar 07, 2025 · 8 min read</div><div class="t">God's Programme</div><p class="d">The purpose, plan and timeline of God across Scripture.</p></a>
+    <a class="entry" href="#article"><div class="meta">Feb 01, 2025 · 8 min read</div><div class="t">Unlocking Your Biblical Understanding</div><p class="d">The right tools deliver the right results.</p></a>
+  </div>
+</main>
+
+<footer class="site-footer"><div class="wrap site-footer__inner"><span>© 2026 Dane Balia</span><span>Built with HappyFrog 🐸</span></div></footer>
+
+<script src="assets/theme.js"></script>
+</body>
+</html>

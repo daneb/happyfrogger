@@ -180,6 +180,10 @@ web_modules/
 # Output of the Dotnet Run
 Output/*.html
 
+# Tailwind standalone CLI binary
+tools/tailwindcss
+tools/tailwindcss.exe
+
 # Yarn Integrity file
 .yarn-integrity
 

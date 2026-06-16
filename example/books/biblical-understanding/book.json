@@ -1,0 +1,29 @@
+{
+  "id": "biblical-understanding",
+  "title": "A Dad's Memoir of Biblical Truth",
+  "subtitle": "A journey through Scripture to equip the everyday man — written one chapter at a time, in the open.",
+  "category": "faith",
+  "status": "In progress",
+  "parts": [
+    {
+      "label": "Part I",
+      "title": "Understanding the Foundation",
+      "epigraph": "Getting oriented with God's Word",
+      "chapters": [
+        "the-absent-man",
+        "unlocking-your-bible-understanding",
+        "gods-programme",
+        "why-bible-versions-matter"
+      ]
+    },
+    {
+      "label": "Part II",
+      "title": "The Journey of Salvation",
+      "epigraph": "The core of Christian faith and life",
+      "chapters": [
+        { "slug": "the-gospel-message", "title": "The Gospel Message", "description": "What the good news actually is." },
+        { "slug": "the-cross-of-salvation", "title": "The Cross of Salvation", "description": "The centre of everything." }
+      ]
+    }
+  ]
+}

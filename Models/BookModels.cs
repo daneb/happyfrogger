@@ -13,6 +13,7 @@ public class BookManifest
     public string Category { get; set; } = "";     // category page that hosts this book
     public string Cover { get; set; } = "";
     public string Status { get; set; } = "In progress";
+    public int? TotalChapters { get; set; }
     public List<BookPartConfig> Parts { get; set; } = new();
 }
 

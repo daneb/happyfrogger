@@ -44,10 +44,14 @@
 
         {{ if featured_book }}
         <a class="book-feature" href="{{ featured_book.base_url }}index.html">
+            {{ if featured_book.cover_image != "" }}
+            <img src="{{ featured_book.cover_image }}" alt="{{ featured_book.title }}" class="book-cover-img" style="width:96px;height:140px;object-fit:cover;border-radius:4px;box-shadow:var(--shadow);">
+            {{ else }}
             <div class="book-cover" style="width:96px;height:140px;">
                 <span class="meta" style="color:oklch(0.92 0.04 60/0.7);font-size:7.5px;">A Memoir</span>
                 <span class="ttl" style="font-size:13px;margin-top:4px;">{{ featured_book.title }}</span>
             </div>
+            {{ end }}
             <div class="book-feature__body">
                 <span class="kicker" style="--sec:var(--accent)">New book · In progress</span>
                 <h2>{{ featured_book.title }}</h2>

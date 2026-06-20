@@ -26,6 +26,9 @@
         <div class="wrap-wide" style="padding-top:28px;"><a class="meta" style="text-decoration:none;" href="{{ category_url }}">← {{ category_label }}</a></div>
 
         <section class="book-hero"><div class="wrap-wide"><div class="book-hero__inner">
+            {{ if cover_image != "" }}
+            <img src="../../{{ cover_image }}" alt="{{ title }}" class="cover" style="object-fit:cover;">
+            {{ else }}
             <div class="cover">
                 <span class="meta" style="color:oklch(0.93 0.03 86/0.7)">A Memoir</span>
                 <div>
@@ -33,6 +36,7 @@
                     <div style="font-family:var(--serif);font-style:italic;font-size:13px;color:oklch(0.9 0.03 86/0.85);margin-top:12px;">{{ site_author }}</div>
                 </div>
             </div>
+            {{ end }}
             <div style="flex:1;min-width:280px;">
                 <span class="kicker">{{ category }} · Book in progress</span>
                 <h1>{{ title }}</h1>

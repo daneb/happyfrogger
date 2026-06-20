@@ -8,22 +8,30 @@ No Node. No Tailwind. No build step for CSS — the design system is one hand-au
 
 ## Quick start
 
+HappyFrogger separates the **engine** (this repo) from your **content** (your blog repo). The config and all content live in your blog directory; the engine is run from there.
+
 ```bash
+# 1. Build the engine once
 dotnet build
 
-# scaffold a new draft and start writing
-dotnet run -- new "My First Post" -c tech
+# 2. Put happyfrog.config.json in your blog directory (see Configuration below)
+
+# 3. From your blog directory:
+cd ../my-blog
+
+# scaffold a new draft
+dotnet run --project ../happyfrogger -- new "My First Post" -c tech
 
 # build the site
-dotnet run
+dotnet run --project ../happyfrogger
 
 # build + live-reload preview at http://localhost:4000
-dotnet run -- --serve
+dotnet run --project ../happyfrogger -- --serve
 ```
 
 Generated HTML lands in your configured `outputPath`. Deploy that folder anywhere static (GitHub Pages, Netlify, S3, …).
 
-> Tip: alias `hf="dotnet run --"` so the commands read `hf new …`, `hf serve`, `hf`.
+> Tip: alias `hf="dotnet run --project /path/to/happyfrogger --"` so the commands read `hf new …`, `hf --serve`, `hf`.
 
 ---
 
@@ -70,20 +78,24 @@ Books are more than a folder of posts. Each book has a **`book.json` manifest** 
 
 ### 1. Configure the book in `happyfrog.config.json`
 
+Paths are relative to your **blog directory** (where you run the tool from).
+
 ```json
 "books": [
   {
     "id": "biblical-understanding",
     "title": "A Dad's Memoir of Biblical Truth",
-    "path": "../blog/books/biblical-understanding",
-    "outputPath": "../blog/books/biblical-understanding",
+    "path": "books/biblical-understanding",
+    "outputPath": "books/biblical-understanding",
+    "coverImage": "books/biblical-understanding/cover.png",
     "category": "faith"
   },
   { "id": "untitled-next", "title": "Untitled (next book)", "category": "faith", "planned": true }
 ]
 ```
 
-A `"planned": true` entry has no folder yet and appears on the **shelf** of other books.
+- `coverImage` — path relative to the output root; rendered on the landing page. Omit to use the CSS placeholder.
+- A `"planned": true` entry has no folder yet and appears on the **shelf** of other books.
 
 ### 2. Add a `book.json` to the book folder
 
@@ -94,6 +106,7 @@ A `"planned": true` entry has no folder yet and appears on the **shelf** of othe
   "subtitle": "A journey through Scripture to equip the everyday man.",
   "category": "faith",
   "status": "In progress",
+  "totalChapters": 16,
   "parts": [
     {
       "label": "Part I",
@@ -112,7 +125,8 @@ A `"planned": true` entry has no folder yet and appears on the **shelf** of othe
 }
 ```
 
-A chapter is **available** when a published `.md` with that slug exists in the folder; otherwise it shows as *Coming soon* using the manifest's title/description. Progress is computed as `available / total`.
+- `totalChapters` — optional. Sets the denominator for the progress bar (`available / totalChapters`). Useful when you haven't listed all planned chapters in `parts[]` yet. Omit to derive the total from the manifest automatically.
+- A chapter is **available** when a published `.md` with that slug exists in the folder; otherwise it shows as *Coming soon* using the manifest's title/description.
 
 ### 3. Write chapters
 
@@ -138,7 +152,7 @@ A complete, runnable example (manifest + four written chapters + two coming-soon
 ## Project structure
 
 ```
-HappyFrog/
+happyfrogger/               ← engine (this repo)
 ├── Templates/
 │   ├── LandingTemplate.html
 │   ├── BlogTemplate.html
@@ -152,9 +166,18 @@ HappyFrog/
 ├── PostProcessor.cs         # Markdown → HTML, front matter, TOC, reading time
 ├── BookProcessor.cs         # book.json → parts, chapters, shelf
 ├── PageGenerator.cs         # Scriban rendering
-├── AssetGenerator.cs        # copies theme assets + RSS + sitemap
-├── Commands.cs              # `hf new`
-└── happyfrog.config.json
+├── AssetGenerator.cs        # copies theme assets, processes images, RSS, sitemap
+├── ImageProcessor.cs        # resizes/compresses images via ImageSharp
+└── Commands.cs              # `hf new`
+
+my-blog/                    ← content (separate repo)
+├── happyfrog.config.json    # site config — lives here, not in the engine
+├── markdownfiles/           # blog posts
+├── images/                  # source images (optimised on build)
+└── books/
+    └── my-book/
+        ├── book.json
+        └── chapter-01.md
 ```
 
 Templates are [Scriban](https://github.com/scriban/scriban). Model properties map to `snake_case` in templates (`PublishDate` → `publish_date`).
@@ -169,16 +192,22 @@ The site ships light and dark. `theme.js` respects the OS preference on first vi
 
 ## Configuration
 
-`happyfrog.config.json` controls paths, site metadata, categories, books, RSS, sitemap, and TOC behaviour. See [`example/happyfrog.config.json`](example/happyfrog.config.json) for a complete file.
+`happyfrog.config.json` lives in your **content directory** (not the engine repo). All paths are relative to that directory. See [`example/happyfrog.config.json`](example/happyfrog.config.json) for a complete file.
 
 | Key | Purpose |
 |---|---|
-| `markdownFilesPath` / `outputPath` / `templatesPath` | where content, output, and templates live |
+| `markdownFilesPath` / `outputPath` | where content and output live (relative to blog dir) |
+| `templatesPath` | resolved from the executable — leave as `"Templates"` |
 | `site.{title,description,author,baseUrl}` | metadata + masthead copy |
 | `build.categories` | the sections to generate |
 | `build.includeDrafts` | include `status: draft` posts (or pass `--drafts`) |
 | `build.toc` | TOC thresholds and title |
+| `build.images.enabled` | turn image optimisation on/off |
+| `build.images.sourcePath` | folder of original images |
+| `build.images.maxWidth` | images wider than this are resized down (default 1200) |
+| `build.images.quality` | JPEG/WebP compression quality, 1–100 (default 85) |
 | `books[]` | book folders + planned future books |
+| `books[].coverImage` | path to cover image relative to output root |
 
 ---
 
@@ -198,6 +227,7 @@ The site ships light and dark. `theme.js` respects the OS preference on first vi
 - [Markdig](https://github.com/xoofx/markdig) — Markdown
 - [Scriban](https://github.com/scriban/scriban) — templating
 - [YamlDotNet](https://github.com/aaubry/YamlDotNet) — front matter
+- [SixLabors.ImageSharp](https://github.com/SixLabors/ImageSharp) — image resizing and compression
 
 Tailwind and Node are **no longer required** — delete `input.css`, `output.css`, `tailwind.config.js`, and the npm `*:css` scripts.
 

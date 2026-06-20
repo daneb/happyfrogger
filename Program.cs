@@ -79,6 +79,7 @@ async Task RunBuild()
                 Title       = featured.Index.Title,
                 Description = featured.Index.Description,
                 BaseUrl     = $"books/{featured.Config.Id}/",
+                CoverImage  = featured.Config.CoverImage,
                 Progress    = featured.Index.Progress
             },
             Sections = config.Build.Categories.Select(cat => new LandingSection

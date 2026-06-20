@@ -24,5 +24,6 @@ public class FeaturedBook
     public string Title { get; set; } = "";
     public string Description { get; set; } = "";
     public string BaseUrl { get; set; } = "";    // e.g. "books/biblical-understanding/"
+    public string CoverImage { get; set; } = ""; // relative to output root
     public int Progress { get; set; }
 }

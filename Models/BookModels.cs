@@ -47,6 +47,7 @@ public class BookIndexModel
     public string CategoryLabel { get; set; } = ""; // "Faith & Wisdom"
     public string Title { get; set; } = "";
     public string Description { get; set; } = "";
+    public string CoverImage { get; set; } = "";
     public int Progress { get; set; }
     public int ChaptersAvailable { get; set; }
     public int ChaptersTotal { get; set; }

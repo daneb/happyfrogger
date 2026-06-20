@@ -159,6 +159,7 @@ public class BookProcessor
             CategoryLabel = CategoryInfo.Categories.TryGetValue(m.Category, out var info) ? info.Title : m.Category,
             Title = m.Title,
             Description = m.Subtitle,
+            CoverImage = book.CoverImage,
             ChaptersTotal = m.TotalChapters ?? n,
             ChaptersAvailable = available,
             Progress = (m.TotalChapters ?? n) == 0 ? 0 : (int)Math.Round(available / (double)(m.TotalChapters ?? n) * 100),

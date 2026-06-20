@@ -27,7 +27,10 @@
 
         <section class="book-hero"><div class="wrap-wide"><div class="book-hero__inner">
             {{ if cover_image != "" }}
-            <img src="../../{{ cover_image }}" alt="{{ title }}" class="cover" style="object-fit:cover;">
+            <div class="cover" style="padding:0;overflow:hidden;position:relative;">
+                <img src="{{ root_url }}{{ cover_image }}" alt="{{ title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
+                <div style="position:absolute;inset:0;box-shadow:inset 6px 0 12px oklch(0 0 0/0.35);pointer-events:none;"></div>
+            </div>
             {{ else }}
             <div class="cover">
                 <span class="meta" style="color:oklch(0.93 0.03 86/0.7)">A Memoir</span>

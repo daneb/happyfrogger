@@ -48,9 +48,10 @@ public class PageGenerator
     {
         var extra = new Dictionary<string, object?>
         {
-            ["css_path"] = "../../assets/theme.css",
-            ["js_path"]  = "../../assets/theme.js",
-            ["home_url"] = "../../index.html",
+            ["css_path"]  = "../../assets/theme.css",
+            ["js_path"]   = "../../assets/theme.js",
+            ["home_url"]  = "../../index.html",
+            ["root_url"]  = "../../",
         };
         File.WriteAllText(outputPath, Render("BookIndexTemplate.html", model, extra));
     }

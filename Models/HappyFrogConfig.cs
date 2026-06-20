@@ -31,6 +31,7 @@ public class BuildOptions
     public RssOptions Rss { get; set; } = new RssOptions();
     public SitemapOptions Sitemap { get; set; } = new SitemapOptions();
     public TocOptions Toc { get; set; } = new TocOptions();
+    public ImageOptions Images { get; set; } = new ImageOptions();
 }
 
 public class BookConfig
@@ -69,4 +70,13 @@ public class TocOptions
     public int MinHeadings { get; set; } = 3;
     public int MaxLevel { get; set; } = 3;
     public string Title { get; set; } = "Table of Contents";
+}
+
+public class ImageOptions
+{
+    public bool Enabled { get; set; } = false;
+    public string SourcePath { get; set; } = "";
+    public string OutputSubPath { get; set; } = "images";
+    public int MaxWidth { get; set; } = 1200;
+    public int Quality { get; set; } = 85;
 }

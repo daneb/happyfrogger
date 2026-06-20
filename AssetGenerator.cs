@@ -17,6 +17,8 @@ public class AssetGenerator
     {
         CopyStaticAssets();
 
+        new ImageProcessor(_config.Build.Images, _config.OutputPath).ProcessImages();
+
         if (_config.Build.Rss.Enabled)
         {
             try

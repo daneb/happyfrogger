@@ -270,3 +270,6 @@ node_modules/
 jspm_packages/
 
 # Snowpack
+
+# Site-specific config — lives in the content repo, not the engine
+happyfrog.config.json

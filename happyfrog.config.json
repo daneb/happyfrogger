@@ -9,7 +9,7 @@
       "description": "A journey through Scripture to equip the everyday man.",
       "path": "../blog/books/biblical-understanding",
       "outputPath": "../blog/books/biblical-understanding",
-      "coverImage": "",
+      "coverImage": "../blog/books/biblical-understanding/cover.jpg",
       "category": "faith"
     }
   ],
@@ -45,6 +45,13 @@
       "minHeadings": 3,
       "maxLevel": 3,
       "title": "Table of Contents"
+    },
+    "images": {
+      "enabled": true,
+      "sourcePath": "../blog/images",
+      "outputSubPath": "images",
+      "maxWidth": 1200,
+      "quality": 85
     }
   }
 }

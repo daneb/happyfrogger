@@ -35,6 +35,9 @@ public class StudyResource
     [YamlDotNet.Serialization.YamlMember(Alias = "title")]
     public string Title { get; set; } = "";
 
+    [YamlDotNet.Serialization.YamlMember(Alias = "author")]
+    public string Author { get; set; } = "";
+
     [YamlDotNet.Serialization.YamlMember(Alias = "description")]
     public string Description { get; set; } = "";
 

@@ -86,8 +86,8 @@ public class PostProcessor
             TableOfContents = tableOfContents,
             ChapterNumber = metadata.ChapterNumber,
             Progress = metadata.Progress,
-            PreviousChapter = metadata.PreviousChapter,
-            NextChapter = metadata.NextChapter,
+            PreviousChapter = StripHtml(metadata.PreviousChapter),
+            NextChapter = StripHtml(metadata.NextChapter),
             StudyResources = metadata.StudyResources
         };
 
@@ -120,6 +120,9 @@ public class PostProcessor
 
         return sb.ToString().Trim();
     }
+
+    private static string? StripHtml(string? value) =>
+        value?.EndsWith(".html", StringComparison.OrdinalIgnoreCase) == true ? value[..^5] : value;
 
     private static string GenerateSlug(string title)
     {

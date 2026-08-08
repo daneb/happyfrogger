@@ -11,27 +11,34 @@ No Node. No Tailwind. No build step for CSS — the design system is one hand-au
 HappyFrogger separates the **engine** (this repo) from your **content** (your blog repo). The config and all content live in your blog directory; the engine is run from there.
 
 ```bash
-# 1. Build the engine once
-dotnet build
+# 1. Clone the engine alongside your blog
+git clone https://github.com/daneb/happyfrogger
+# expects: ../my-blog/ and ../happyfrogger/ as siblings
 
 # 2. Put happyfrog.config.json in your blog directory (see Configuration below)
 
-# 3. From your blog directory:
-cd ../my-blog
+# 3. Build the site (from the happyfrogger directory)
+./build.sh
 
-# scaffold a new draft
-dotnet run --project ../happyfrogger -- new "My First Post" -c tech
+# Or point at any blog directory:
+./build.sh --blog /path/to/my-blog
 
-# build the site
-dotnet run --project ../happyfrogger
-
-# build + live-reload preview at http://localhost:4000
-dotnet run --project ../happyfrogger -- --serve
+# 4. Preview with live reload
+./build.sh -- --serve
 ```
 
-Generated HTML lands in your configured `outputPath`. Deploy that folder anywhere static (GitHub Pages, Netlify, S3, …).
+The script `cd`s into the blog directory, so the engine picks up `happyfrog.config.json` and resolves all paths relative to the content repo. Generated HTML lands in your configured `outputPath`. Deploy that folder anywhere static (GitHub Pages, Netlify, S3, …).
 
-> Tip: alias `hf="dotnet run --project /path/to/happyfrogger --"` so the commands read `hf new …`, `hf --serve`, `hf`.
+**Alternative — run dotnet directly** (if you prefer not to use the script):
+
+```bash
+cd ../my-blog
+dotnet run --project ../happyfrogger -- new "My First Post" -c tech  # scaffold
+dotnet run --project ../happyfrogger                                  # build
+dotnet run --project ../happyfrogger -- --serve                       # build + watch
+```
+
+> Tip: `alias hf="dotnet run --project /absolute/path/to/happyfrogger --"` from your blog directory so the commands read `hf new …`, `hf --serve`, `hf`.
 
 ---
 
@@ -83,18 +90,20 @@ Paths are relative to your **blog directory** (where you run the tool from).
 ```json
 "books": [
   {
-    "id": "biblical-understanding",
-    "title": "A Dad's Memoir of Biblical Truth",
-    "path": "books/biblical-understanding",
-    "outputPath": "books/biblical-understanding",
-    "coverImage": "books/biblical-understanding/cover.png",
+    "id": "my-book",
+    "title": "My Book Title",
+    "path": "src/books/my-book",
+    "outputPath": "books/my-book",
+    "coverImage": "books/my-book/cover.png",
     "category": "faith"
   },
-  { "id": "untitled-next", "title": "Untitled (next book)", "category": "faith", "planned": true }
+  { "id": "future-book", "title": "Future Book", "category": "faith", "planned": true }
 ]
 ```
 
-- `coverImage` — path relative to the output root; rendered on the landing page. Omit to use the CSS placeholder.
+- `path` — where the markdown source lives (relative to blog dir, e.g. inside `src/books/`)
+- `outputPath` — where the generated HTML is written (relative to blog dir)
+- `coverImage` — path to cover image relative to the output root; rendered on the landing page. Omit to use the CSS placeholder.
 - A `"planned": true` entry has no folder yet and appears on the **shelf** of other books.
 
 ### 2. Add a `book.json` to the book folder
@@ -153,6 +162,7 @@ A complete, runnable example (manifest + four written chapters + two coming-soon
 
 ```
 happyfrogger/               ← engine (this repo)
+├── build.sh                 # wrapper: resolves blog dir, runs Tailwind + dotnet
 ├── Templates/
 │   ├── LandingTemplate.html
 │   ├── BlogTemplate.html
@@ -172,12 +182,15 @@ happyfrogger/               ← engine (this repo)
 
 my-blog/                    ← content (separate repo)
 ├── happyfrog.config.json    # site config — lives here, not in the engine
-├── markdownfiles/           # blog posts
-├── images/                  # source images (optimised on build)
-└── books/
-    └── my-book/
-        ├── book.json
-        └── chapter-01.md
+├── src/
+│   ├── posts/               # blog post markdown files
+│   └── books/
+│       └── my-book/         # book folder (path set in config)
+│           ├── book.json    # manifest: parts, chapters, totalChapters
+│           └── chapter-01.md
+├── images/                  # source images (optimised on build if enabled)
+├── books/                   # generated book HTML + cover images (outputPath)
+└── (*.html, index.html…)    # generated site output (outputPath: ".")
 ```
 
 Templates are [Scriban](https://github.com/scriban/scriban). Model properties map to `snake_case` in templates (`PublishDate` → `publish_date`).
@@ -196,7 +209,8 @@ The site ships light and dark. `theme.js` respects the OS preference on first vi
 
 | Key | Purpose |
 |---|---|
-| `markdownFilesPath` / `outputPath` | where content and output live (relative to blog dir) |
+| `markdownFilesPath` | path to markdown source files, relative to blog dir (e.g. `"src/posts"`) |
+| `outputPath` | where generated HTML is written (e.g. `"."` for blog root) |
 | `templatesPath` | resolved from the executable — leave as `"Templates"` |
 | `site.{title,description,author,baseUrl}` | metadata + masthead copy |
 | `build.categories` | the sections to generate |
@@ -213,12 +227,17 @@ The site ships light and dark. `theme.js` respects the OS preference on first vi
 
 ## CLI
 
+Run from the **happyfrogger directory** using `build.sh`, or from your **blog directory** using `dotnet run --project`:
+
 | Command | Does |
 |---|---|
-| `dotnet run` | build the site |
-| `dotnet run -- --serve [--port 4000]` | build + watch + live-reload preview |
-| `dotnet run -- --drafts` | include drafts in the build |
-| `dotnet run -- new "Title" -c tech [-s sub] [--book id]` | scaffold a draft post (or book chapter) |
+| `./build.sh` | build the site (blog dir defaults to `../blog`) |
+| `./build.sh --blog /path/to/blog` | build with an explicit blog directory |
+| `./build.sh -- --serve [--port 4000]` | build + watch + live-reload preview |
+| `./build.sh -- --drafts` | include drafts in the build |
+| `dotnet run --project ../happyfrogger` | build (run from blog directory) |
+| `dotnet run --project ../happyfrogger -- --serve` | build + watch (run from blog directory) |
+| `dotnet run --project ../happyfrogger -- new "Title" -c tech [-s sub] [--book id]` | scaffold a draft post or book chapter |
 
 ---
 

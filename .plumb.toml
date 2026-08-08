@@ -14,6 +14,7 @@ sandbox_allowed_domains = ""   # comma/space-separated hosts the implementer's s
                            # Bash may reach (claude adapter only); empty = no network egress.
                            # Widen only for a registry your build genuinely needs mid-implement.
 
+
 [baseline]
 # recorded by 'plumb init' — the ratchet-brake: values only
 # ever decrease (coverage only ever increases), and a
@@ -21,4 +22,6 @@ sandbox_allowed_domains = ""   # comma/space-separated hosts the implementer's s
 # own (PLUMBLINE-PLAN.md P8). Do not hand-edit an existing
 # value; delete an entry and re-run 'plumb init' to
 # re-baseline it.
-npm_run_test_lines = 5   # npm run test
+dotnet_build_HappyFrog_sln_lines = 10   # dotnet build "HappyFrog.sln"
+dotnet_test_HappyFrog_sln_lines = 11   # dotnet test "HappyFrog.sln"
+dotnet_format_HappyFrog_sln_verify_no_changes_lines = 82   # dotnet format "HappyFrog.sln" --verify-no-changes

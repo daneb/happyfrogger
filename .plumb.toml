@@ -1,0 +1,24 @@
+# .plumb.toml — the only configuration plumb accepts.
+#
+# `plumb init` appends a [baseline] table below the first time it runs (and
+# adds an entry for any check discovered later that isn't baselined yet) —
+# G2's per-check violation-line and coverage baselines. Never hand-edit an
+# existing entry there; delete it and re-run `plumb init` to re-baseline.
+
+reviewer_model = ""        # cross-model reviewer: "model", or "adapter/model" to review on a
+                           # different CLI (e.g. "claude/claude-opus-4-8" while PLUMB_ADAPTER=kiro)
+fanout_cap = 2             # max parallel implementer tasks (enforced from build step 4)
+review_blocking = true     # if true, a "concerns" verdict also fails G2.5
+diff_budget_lines = 400    # max added+removed lines per task diff
+sandbox_allowed_domains = ""   # comma/space-separated hosts the implementer's sandboxed
+                           # Bash may reach (claude adapter only); empty = no network egress.
+                           # Widen only for a registry your build genuinely needs mid-implement.
+
+[baseline]
+# recorded by 'plumb init' — the ratchet-brake: values only
+# ever decrease (coverage only ever increases), and a
+# widened value is only ever a reviewable commit on its
+# own (PLUMBLINE-PLAN.md P8). Do not hand-edit an existing
+# value; delete an entry and re-run 'plumb init' to
+# re-baseline it.
+npm_run_test_lines = 5   # npm run test
